@@ -278,6 +278,30 @@ section{position:relative}
 .stat p{margin-top:12px;font-weight:700;font-size:17px}
 
 /* testimonials */
+.offers-lead{margin-top:20px;font-size:18px;max-width:52ch}
+.offers{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:20px;margin-top:48px;align-items:start}
+.offer{--pad:clamp(26px,3vw,40px);position:relative;border-radius:28px;background:var(--white);color:var(--ink);padding:var(--pad);display:flex;flex-direction:column;gap:22px}
+.offer-main{background:var(--navy);color:var(--white)}
+.offer-top{display:flex;justify-content:space-between;align-items:center;gap:10px 14px;flex-wrap:wrap}
+.offer-route{font-weight:900;font-size:clamp(24px,2.4vw,32px);letter-spacing:-.02em;color:var(--orange)}
+.offer:not(.offer-main) .offer-route{color:var(--red)}
+.offer-date{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border-radius:999px;background:var(--orange);color:var(--navy);font-weight:700;font-size:14px}
+.offer h3{font-weight:900;font-size:clamp(34px,3.8vw,56px);line-height:1;letter-spacing:-.035em}
+.offer:not(.offer-main) h3{color:var(--navy)}
+.offer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:16px}
+.offer li{display:grid;grid-template-columns:18px 1fr;gap:8px}
+.offer li::before{content:'';width:9px;height:9px;margin-top:8px;border-radius:50%;background:var(--orange)}
+.offer-cut{position:relative;margin:4px calc(-1*var(--pad));border-top:2px dashed color-mix(in srgb,currentColor 22%,transparent)}
+.offer-cut::before,.offer-cut::after{content:'';position:absolute;top:-15px;width:28px;height:28px;border-radius:50%;background:var(--sand)}
+.offer-cut::before{left:-14px}
+.offer-cut::after{right:-14px}
+.offer-price small{display:block;font-size:14px;font-weight:700;opacity:.8}
+.offer-price strong{display:block;margin-top:4px;font-weight:900;font-size:clamp(38px,4.2vw,60px);line-height:1;letter-spacing:-.035em}
+.offer-main .offer-price strong{color:var(--orange)}
+.offer:not(.offer-main) .offer-price strong{color:var(--navy)}
+.offer-price span{display:block;margin-top:8px;font-size:16px;max-width:38ch}
+.offer .btn{align-self:flex-start}
+.offers-note{margin-top:20px;font-size:14px}
 .quotes{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px;margin-top:56px}
 .quote{margin:0;border-radius:28px;padding:clamp(24px,3vw,40px);display:flex;flex-direction:column;justify-content:space-between;gap:24px;background:var(--white)}
 .quote blockquote{margin:0;font-size:18px;line-height:1.5}
@@ -394,6 +418,8 @@ section{position:relative}
   .stats{grid-template-columns:1fr;gap:28px;margin-top:56px}
   .quotes{grid-template-columns:1fr}
   .quote-main,.quote-a,.quote-b,.quote-c,.quote-d{grid-column:auto}
+  .offers{grid-template-columns:1fr}
+  .offer .btn{align-self:stretch}
   .trip-photos{grid-template-columns:1fr 1fr;grid-template-rows:auto;grid-auto-flow:dense;gap:10px}
   .trip-photos .mask-img{border-radius:20px}
   .tp-1,.tp-3{grid-column:span 2;aspect-ratio:16/9}
@@ -430,6 +456,7 @@ section{position:relative}
     <span class="logo-word"><b>LOGOS<span>TOUR</span></b><small>Viagens e Turismo</small></span>
   </a>
   <nav class="nav-pill" aria-label="Menu principal">
+    <a href="#pacotes">Pacotes</a>
     <a href="#destinos">Destinos</a>
     <a href="#diferenciais">Por que a Logos</a>
     <a href="#depoimentos">Depoimentos</a>
@@ -442,6 +469,7 @@ section{position:relative}
   </div>
 </header>
 <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <a href="#pacotes">Pacotes</a>
   <a href="#destinos">Destinos</a>
   <a href="#diferenciais">Por que a Logos</a>
   <a href="#depoimentos">Depoimentos</a>
@@ -556,6 +584,41 @@ section{position:relative}
       <div class="track" id="track"></div>
       <div class="track-progress" aria-hidden="true"><span id="track-progress"></span></div>
     </div>
+  </div>
+</section>
+
+<!-- Pacotes com data marcada -->
+<section class="section bg-sand" id="pacotes" aria-labelledby="pacotes-title">
+  <div class="wrap">
+    <h2 class="h2 split" id="pacotes-title">Pacotes com data marcada e preço fechado</h2>
+    <p class="offers-lead reveal">Passagem, hospedagem e carro já negociados. Você escolhe a data, garante a vaga e parcela sem juros.</p>
+    <div class="offers">
+      <article class="offer offer-main reveal">
+        <div class="offer-top"><span class="offer-route">NAT <span aria-hidden="true">&rarr;</span><span class="visually-hidden">para</span> POA</span><span class="offer-date">10 a 16 de junho de 2027</span></div>
+        <h3>Gramado</h3>
+        <ul>
+          <li>Passagem aérea de ida e volta saindo de Natal, com conexões</li>
+          <li>4 noites no Sky Palace Hotel, com café da manhã</li>
+          <li>Carro alugado em Porto Alegre para rodar a serra no seu ritmo</li>
+        </ul>
+        <div class="offer-cut" aria-hidden="true"></div>
+        <div class="offer-price"><small>Por pessoa</small><strong>R$ 2.916,80</strong><span>ou 10x de R$ 291,68 sem juros</span></div>
+        <a class="btn btn-primary btn-magnetic" data-wa data-msg="Olá, Edson! Vim pelo site e quero reservar o pacote de Gramado de 10 a 16 de junho de 2027." href="#"><svg aria-hidden="true"><use href="#wa"/></svg>Quero ir para Gramado</a>
+      </article>
+      <article class="offer reveal" style="--d:120ms">
+        <div class="offer-top"><span class="offer-route">NAT <span aria-hidden="true">&rarr;</span><span class="visually-hidden">para</span> GRU</span><span class="offer-date">15 a 19 de abril de 2027</span></div>
+        <h3>Campos do Jordão</h3>
+        <ul>
+          <li>Passagem aérea LATAM de Natal a São Paulo, ida e volta</li>
+          <li>4 noites na Pousada Suisse, suíte dupla com café da manhã</li>
+          <li>Carro alugado com quilometragem livre</li>
+        </ul>
+        <div class="offer-cut" aria-hidden="true"></div>
+        <div class="offer-price"><small>Por pessoa, em suíte para 2</small><strong>R$ 2.242,33</strong><span>à vista no Pix, ou 10x de R$ 224,23 sem juros no cartão ou no boleto Santander</span></div>
+        <a class="btn btn-primary btn-magnetic" data-wa data-msg="Olá, Edson! Vim pelo site e quero reservar o pacote de Campos do Jordão de 15 a 19 de abril de 2027." href="#"><svg aria-hidden="true"><use href="#wa"/></svg>Quero ir para Campos do Jordão</a>
+      </article>
+    </div>
+    <p class="offers-note">Valores por pessoa, sujeitos a alteração pelas companhias aéreas e hotéis. Vagas limitadas.</p>
   </div>
 </section>
 
@@ -769,7 +832,7 @@ section{position:relative}
   /* ---------- data ---------- */
   const CARDS = [
     { name: 'Maceió', text: 'Praia de água morna e a nossa Viagem das Bodas.', img: '1587571594954-272f8cc473d0', alt: 'Praia de Maceió com coqueiros' },
-    { name: 'Gramado e Canela', text: 'Clima de serra, fondue e o passeio no Trem do Vinho.', local: 'img/gramado-800.webp', alt: 'Rua iluminada de Gramado com hortênsias' },
+    { name: 'Gramado e Canela', text: 'Clima de serra e fondue. Pacote em junho de 2027 a partir de R$ 2.916,80 por pessoa.', local: 'img/gramado-800.webp', alt: 'Rua iluminada de Gramado com hortênsias' },
     { name: 'Porto de Galinhas', text: 'Piscinas naturais e passeio de jangada no mar calmo.', img: '1625841028984-5a4c1a657e19', alt: 'Jangada nas piscinas naturais de Porto de Galinhas' },
     { name: 'Maragogi', text: 'Mar azul turquesa e as galés, pertinho de Natal.', img: '1711805492345-403ca3e43dd1', alt: 'Vista aérea da praia de Maragogi' },
     { name: 'Rio de Janeiro', text: 'Cristo Redentor, Pão de Açúcar e praia no fim da tarde.', local: 'img/rio-800.webp', alt: 'Cristo Redentor e a Baía de Guanabara' },
@@ -803,7 +866,7 @@ section{position:relative}
     { id: 'maragogi', name: 'Maragogi', lon: -35.22, lat: -9.01, dx: 56, dy: -2, img: U('1711805492345-403ca3e43dd1', 900), alt: 'Vista aérea do mar azul turquesa de Maragogi',
       sub: 'Saindo de Natal.', facts: [['Destaque', 'piscinas naturais'], ['Ideal para', 'famílias'], ['Distância', 'perto de Natal']] },
     { id: 'gramado', name: 'Gramado', lon: -50.87, lat: -29.37, dx: -18, dy: 26, img: 'img/gramado-800.webp', alt: 'Rua de Gramado com casas em estilo alpino e hortênsias ao entardecer',
-      sub: 'Saindo de Natal, de avião.', facts: [['Destaque', 'Maria Fumaça e Trem do Vinho'], ['Ideal para', 'casais e famílias'], ['Melhor época', 'feriados e inverno']] },
+      sub: 'Saindo de Natal, de avião.', facts: [['Próxima saída', '10 a 16 de junho de 2027'], ['Pacote', 'R$ 2.916,80 por pessoa, ou 10x de R$ 291,68'], ['Inclui', 'aéreo, 4 noites com café e carro']] },
     { id: 'rio', name: 'Rio de Janeiro', lon: -43.17, lat: -22.91, dx: 26, dy: 22, img: 'img/rio-800.webp', alt: 'Cristo Redentor de costas para a Baía de Guanabara e o Pão de Açúcar',
       sub: 'Saindo de Natal, de avião.', facts: [['Destaque', 'Cristo Redentor e Pão de Açúcar'], ['Ideal para', 'famílias e grupos'], ['Saída', 'Natal, de avião']] },
     { id: 'israel', name: 'Israel', lon: 35.21, lat: 31.77, dx: 0, dy: -30, img: U('1614517453351-6c1522fc7a56', 900), alt: 'Cidade antiga de Jerusalém com a cúpula dourada',
