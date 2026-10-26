@@ -56,7 +56,6 @@
 html{-webkit-text-size-adjust:100%}
 html,body{margin:0}
 body{font-family:'Montserrat',Arial,sans-serif;font-weight:400;color:var(--ink);background:var(--sand);line-height:1.6;font-size:17px;overflow-x:hidden;font-synthesis:none;-webkit-font-smoothing:antialiased}
-body.is-preloading{overflow:hidden}
 img{max-width:100%;display:block}
 a{color:inherit}
 h1,h2,h3,p{margin:0}
@@ -104,108 +103,83 @@ button{font:inherit}
 body.menu-open .site-nav{color:var(--white);background:transparent;box-shadow:none;backdrop-filter:none}
 body.menu-open .site-nav .menu-toggle{background:var(--white);color:var(--navy)}
 
-/* ---------- hero / portal experience ---------- */
-.experience{position:relative;min-height:100svh;min-height:max(100svh,700px);overflow:hidden;background:var(--navy-deep);color:var(--white);isolation:isolate}
-.backgrounds,.background{position:absolute;inset:0;width:100%;height:100%}
-.background{object-fit:cover;opacity:0;transform:scale(1.08);transition:opacity .9s ease}
-.background.is-visible{opacity:1;animation:kenburns 14s linear both}
-@keyframes kenburns{from{transform:scale(1.08)}to{transform:scale(1)}}
-.experience.is-committing .background{transition:none!important}
-.hero-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:
-  linear-gradient(100deg,color-mix(in srgb,var(--navy-deep) 88%,transparent) 0%,color-mix(in srgb,var(--navy-deep) 55%,transparent) 42%,transparent 70%),
-  linear-gradient(to bottom,color-mix(in srgb,var(--navy-deep) 50%,transparent) 0%,transparent 22%,transparent 50%,color-mix(in srgb,#000 82%,transparent) 100%)}
-.portal-canvas{position:absolute;inset:0;z-index:2;width:100%;height:100%;pointer-events:none}
-.hero-grid{position:relative;z-index:3;min-height:inherit;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);grid-template-rows:1fr auto;grid-template-areas:"copy portal" "title facts";gap:24px 48px;padding:calc(var(--nav-h) + clamp(24px,6vh,72px)) var(--gutter) clamp(22px,4vh,40px)}
-.hero-copy{grid-area:copy;align-self:center;max-width:640px}
-.hero-copy h1{font-weight:900;font-size:clamp(40px,5.6vw,84px);line-height:.98;letter-spacing:-.035em}
+/* ---------- hero / globe ---------- */
+.hero{position:relative;min-height:100svh;min-height:max(100svh,720px);overflow:hidden;color:var(--white);
+  background:radial-gradient(60% 70% at 72% 52%,color-mix(in srgb,var(--orange) 22%,transparent) 0%,transparent 60%),
+             radial-gradient(90% 90% at 70% 40%,var(--navy) 0%,var(--navy-deep) 70%)}
+.hero-grid{position:relative;z-index:2;min-height:inherit;display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);align-items:center;gap:24px;padding:calc(var(--nav-h) + 24px) var(--gutter) 96px}
+.hero-copy{position:relative;z-index:1;max-width:600px;transition:opacity .5s ease,transform .6s var(--ease-out),filter .5s ease}
+.hero-copy h1{font-weight:900;font-size:clamp(40px,5.4vw,82px);line-height:.98;letter-spacing:-.035em}
 .hero-copy h1 em{font-style:normal;color:var(--orange)}
 .hero-copy p{margin-top:24px;font-size:clamp(17px,1.35vw,20px);max-width:520px;color:color-mix(in srgb,var(--white) 88%,transparent)}
 .hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
-.chrome{transition:opacity .45s ease,filter .45s ease}
-.experience.is-transitioning .chrome{opacity:0;filter:blur(8px);pointer-events:none}
+.globe-hint{display:flex;align-items:center;gap:10px;margin-top:28px;font-size:15px;font-weight:700;color:var(--orange)}
+.globe-hint::before{content:'';width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 0 0 color-mix(in srgb,var(--red) 60%,transparent);animation:pin-pulse 2s var(--ease-out) infinite}
+@keyframes pin-pulse{to{box-shadow:0 0 0 12px transparent}}
+.hero.has-selection .hero-copy{opacity:0;transform:translateX(-30px);filter:blur(6px);pointer-events:none}
 
-.portal-wrap{grid-area:portal;align-self:center;justify-self:center;width:min(320px,26vw)}
-.portal-heading{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px;font-size:15px;opacity:0}
-.portal-heading strong{font-size:18px;font-weight:900;margin-left:6px}
-.portal{position:relative;display:block;width:100%;aspect-ratio:320/350;padding:0;border:0;border-radius:90px;background:transparent;cursor:pointer;color:inherit}
-.portal:focus-visible{outline-offset:8px}
-.portal-hint{display:block;margin-top:14px;text-align:center;font-size:14px;color:color-mix(in srgb,var(--white) 80%,transparent);opacity:0}
+.globe-wrap{position:static;width:100%;aspect-ratio:1/1;max-width:760px;justify-self:center}
+.globe-wrap canvas{position:absolute;inset:0;width:100%;height:100%;cursor:grab;touch-action:pan-y}
+.globe-wrap canvas.is-dragging{cursor:grabbing}
+.globe-wrap canvas.is-hovering{cursor:pointer}
+.globe-labels{position:absolute;inset:0;pointer-events:none;z-index:1}
+.g-label{position:absolute;left:0;top:0;display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:5px 12px;border-radius:999px;border:1px solid color-mix(in srgb,var(--white) 30%,transparent);background:color-mix(in srgb,var(--navy-deep) 72%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:var(--white);font-size:13px;font-weight:700;white-space:nowrap;cursor:pointer;pointer-events:auto;transition:opacity .3s ease,background .25s ease,border-color .25s ease;will-change:transform}
+.g-label:hover,.g-label.is-active{background:var(--red);border-color:var(--red)}
+.g-label.is-origin{background:var(--orange);border-color:var(--orange);color:var(--navy);pointer-events:none}
+.g-label.is-hidden{opacity:0;pointer-events:none}
+.g-tip{position:absolute;left:0;top:0;padding:8px 12px;border-radius:12px;background:var(--white);color:var(--navy);font-size:14px;font-weight:700;line-height:1.25;white-space:nowrap;pointer-events:none;opacity:0;transform:translate(-50%,calc(-100% - 14px));transition:opacity .2s ease}
+.g-tip small{display:block;font-weight:400;color:var(--ink);font-size:12px}
+.g-tip.is-on{opacity:1}
 
-.dest-title{grid-area:title;align-self:end;font-weight:900;font-size:clamp(56px,12vw,200px);line-height:.8;letter-spacing:-.05em;text-transform:uppercase;white-space:nowrap;opacity:0;margin-bottom:-.06em}
-.facts{grid-area:facts;align-self:end;margin:0;width:100%;max-width:440px;justify-self:end;font-size:15px}
-.fact{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:9px 0;border-bottom:1px solid color-mix(in srgb,var(--white) 45%,transparent);opacity:0}
-.fact:last-child{border-bottom:0}
-.fact dt{font-weight:700}
-.fact dd{margin:0;color:color-mix(in srgb,var(--white) 90%,transparent)}
+.dest-chips{position:absolute;z-index:3;left:0;right:0;bottom:24px;display:flex;justify-content:center;gap:8px;padding:0 var(--gutter);overflow-x:auto;scrollbar-width:none}
+.dest-chips::-webkit-scrollbar{display:none}
+.chip{flex:none;display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid color-mix(in srgb,var(--white) 35%,transparent);background:color-mix(in srgb,var(--white) 8%,transparent);color:var(--white);font-weight:700;font-size:14px;cursor:pointer;transition:background .25s ease,border-color .25s ease,color .25s ease}
+.chip:hover,.chip.is-active{background:var(--white);color:var(--navy);border-color:var(--white)}
+.chip-world{border-style:dashed}
 
-.dest-list{position:absolute;z-index:3;right:var(--gutter);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:flex-end;gap:4px;font-size:14px;opacity:0}
-.dest-item{display:flex;align-items:center;gap:8px;min-height:30px;padding:0;border:0;background:none;color:color-mix(in srgb,var(--white) 72%,transparent);cursor:pointer;font-size:14px;font-weight:400}
-.dest-item.active{color:var(--white);font-size:16px;font-weight:700}
-.dest-item.active::after{content:'';width:12px;height:12px;border-radius:50%;background:var(--orange)}
+.dest-panel{position:absolute;z-index:4;left:var(--gutter);top:calc(var(--nav-h) + 16px);bottom:90px;width:min(440px,calc(100% - 2*var(--gutter)));display:flex;flex-direction:column;background:var(--sand);color:var(--ink);border-radius:28px;overflow:hidden;box-shadow:0 40px 80px -30px color-mix(in srgb,#000 70%,transparent);opacity:0;transform:translateX(-24px) scale(.98);pointer-events:none;transition:opacity .45s ease,transform .6s var(--ease-expo)}
+.dest-panel.is-open{opacity:1;transform:none;pointer-events:auto}
+.panel-scroll{overflow-y:auto;overscroll-behavior:contain;flex:1}
+.panel-media{position:relative;height:170px;overflow:hidden;background:var(--navy)}
+.panel-media img{width:100%;height:100%;object-fit:cover}
+.panel-media.is-world{display:flex;align-items:flex-end;padding:22px 24px;background:radial-gradient(circle at 80% 20%,color-mix(in srgb,var(--orange) 60%,transparent),transparent 55%),var(--navy);color:var(--white)}
+.panel-media.is-world span{font-weight:700;font-size:14px;color:color-mix(in srgb,var(--white) 85%,transparent)}
+.panel-close{position:absolute;top:12px;right:12px;z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:var(--white);color:var(--navy);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 20px -8px color-mix(in srgb,#000 50%,transparent)}
+.panel-close svg{width:18px;height:18px}
+.panel-body{padding:22px 24px 26px}
+.panel-body h2{font-weight:900;font-size:clamp(28px,2.6vw,36px);line-height:1;letter-spacing:-.03em;color:var(--navy)}
+.panel-sub{margin-top:8px;font-size:15px}
+.panel-facts{list-style:none;margin:16px 0 0;padding:0;font-size:15px}
+.panel-facts li{display:grid;grid-template-columns:104px 1fr;gap:10px;padding:7px 0;border-bottom:1px solid color-mix(in srgb,var(--navy) 14%,transparent)}
+.panel-facts li b{color:var(--navy)}
+.quote-form{margin-top:18px;display:flex;flex-direction:column;gap:16px}
+.quote-form fieldset{border:0;margin:0;padding:0;min-width:0}
+.quote-form legend{font-weight:900;font-size:16px;color:var(--navy);margin-bottom:8px;padding:0}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+.opt span{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;border:1.5px solid color-mix(in srgb,var(--navy) 25%,transparent);font-size:14px;font-weight:700;color:var(--navy);transition:background .2s ease,color .2s ease,border-color .2s ease}
+.opt input:checked+span{background:var(--navy);border-color:var(--navy);color:var(--white)}
+.opt input:focus-visible+span{outline:3px solid var(--orange);outline-offset:2px}
+.stepper{display:inline-flex;align-items:center;border:1.5px solid color-mix(in srgb,var(--navy) 25%,transparent);border-radius:999px}
+.stepper button{width:44px;height:44px;border:0;background:none;color:var(--navy);font-size:22px;font-weight:700;cursor:pointer;border-radius:50%}
+.stepper output{min-width:70px;text-align:center;font-weight:900;font-size:18px;color:var(--navy)}
+.text-field{width:100%;min-height:48px;padding:0 16px;border-radius:14px;border:1.5px solid color-mix(in srgb,var(--navy) 25%,transparent);background:var(--white);font:inherit;font-size:16px;color:var(--ink)}
+.quote-form .btn{width:100%;margin-top:4px}
+.panel-note{font-size:13px;margin-top:-6px;text-align:center}
 
-/* entrance */
-body:not(.intro-ready) .site-nav{opacity:0}
-.intro-ready .site-nav{animation:reveal-down .9s var(--ease-out) .1s both}
-.intro-ready .hero-copy>*{animation:fact-rise .9s var(--ease-out) both}
-.intro-ready .hero-copy h1{animation-delay:.15s}
-.intro-ready .hero-copy p{animation-delay:.3s}
-.intro-ready .hero-copy .hero-ctas{animation-delay:.45s}
-body:not(.intro-ready) .hero-copy>*{opacity:0}
-.intro-ready .dest-list{animation:reveal-side .9s var(--ease-out) .65s both}
-.content-revealing .dest-title{animation:title-rise 1.05s var(--ease-expo) both}
-.content-revealing .fact{animation:fact-rise .72s var(--ease-out) both}
-.content-revealing .fact:nth-child(1){animation-delay:.52s}
-.content-revealing .fact:nth-child(2){animation-delay:.68s}
-.content-revealing .fact:nth-child(3){animation-delay:.84s}
-.mask-revealing .portal-heading,.mask-revealing .portal-hint{animation:portal-caption .85s var(--ease-out) both}
-.dest-list.is-switching .dest-item{animation:menu-row .58s var(--ease-out) both}
-.dest-list.is-switching .dest-item:nth-child(2){animation-delay:.05s}
-.dest-list.is-switching .dest-item:nth-child(3){animation-delay:.1s}
-.dest-list.is-switching .dest-item:nth-child(4){animation-delay:.15s}
-.dest-list.is-switching .dest-item:nth-child(5){animation-delay:.2s}
-.dest-list.is-switching .dest-item.active::after{animation:active-dot .55s var(--ease-out) .18s both}
-@keyframes reveal-down{from{opacity:0;filter:blur(8px);transform:translateY(-18px)}to{opacity:1;filter:blur(0);transform:translateY(0)}}
-@keyframes reveal-side{from{opacity:0;filter:blur(8px);transform:translate(20px,-50%)}to{opacity:1;filter:blur(0);transform:translate(0,-50%)}}
-@keyframes title-rise{from{opacity:0;filter:blur(12px);transform:translateY(42px)}to{opacity:1;filter:blur(0);transform:translateY(0)}}
-@keyframes fact-rise{from{opacity:0;filter:blur(7px);transform:translateY(18px)}to{opacity:1;filter:blur(0);transform:translateY(0)}}
-@keyframes portal-caption{from{opacity:0;filter:blur(7px);transform:translateY(22px)}to{opacity:1;filter:blur(0);transform:translateY(0)}}
-@keyframes menu-row{from{opacity:.35;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
-@keyframes active-dot{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
-.portal-heading,.portal-hint,.dest-title,.fact{animation-fill-mode:both}
-.experience.is-settled .portal-heading,.experience.is-settled .portal-hint,.experience.is-settled .dest-title,.experience.is-settled .fact{opacity:1}
+.hero-backdrop{display:none}
 
-/* ---------- preloader ---------- */
-.preloader{position:fixed;inset:0;z-index:60;background:var(--navy-deep);overflow:hidden;transition:opacity .9s ease,visibility .9s}
-.preloader img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;transform:scale(1.35);transition:transform 3.2s var(--ease-expo),opacity 1s ease}
-.preloader.is-running img{transform:scale(1.04)}
-.preloader-shade{position:absolute;inset:0;background:linear-gradient(to bottom,color-mix(in srgb,var(--navy-deep) 40%,transparent),color-mix(in srgb,#000 75%,transparent))}
-.preloader.is-done{opacity:0;visibility:hidden}
-.preloader-count{position:fixed;z-index:62;left:50%;bottom:clamp(22px,4vh,40px);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--white);line-height:1}
-.preloader-count .num{display:flex;align-items:flex-end;gap:4px}
-.preloader-count .num span:first-child{font-size:64px;font-weight:400;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
-.preloader-count .num .percent{font-size:22px;padding-bottom:8px}
-.preloader-count .label{font-size:14px;color:color-mix(in srgb,var(--white) 80%,transparent)}
-.preloader-count.is-leaving{animation:count-out .75s var(--ease-out) both}
-@keyframes count-out{to{opacity:0;filter:blur(7px);transform:translate(-50%,-34px)}}
-.floating-logo{position:fixed;z-index:63;left:0;top:0;color:var(--white);transform-origin:0 0;pointer-events:none;will-change:transform}
-
-.floating-logo.is-flying{transition:transform 1.6s var(--ease-expo)}
-body.is-preloading .site-nav .logo{visibility:hidden}
-
-/* ---------- custom cursor ---------- */
-.custom-cursor{display:none}
-@media (hover:hover) and (pointer:fine){
-  .experience,.experience .portal,.experience button{cursor:none}
-  .custom-cursor{display:block;position:fixed;left:0;top:0;z-index:100;width:1px;height:1px;pointer-events:none;opacity:0;transition:opacity .2s ease}
-  .custom-cursor.is-visible{opacity:1}
-  .cursor-dot,.cursor-orbit{position:absolute;left:0;top:0;border-radius:50%;transform:translate(-50%,-50%)}
-  .cursor-dot{width:12px;height:12px;background:var(--white)}
-  .cursor-orbit{width:36px;height:36px;border:1px solid var(--white);background:color-mix(in srgb,var(--white) 35%,transparent);transition:transform .3s var(--ease-out),width .3s var(--ease-out),height .3s var(--ease-out)}
-  .custom-cursor.is-enter .cursor-orbit{transform:translate(-50%,-50%) scale(1.6)}
-  .custom-cursor.is-link .cursor-orbit{transform:translate(-50%,-50%) scale(1.25)}
-  .cursor-label{position:absolute;top:30px;left:0;transform:translateX(-50%) translateY(-4px);font-size:15px;font-weight:700;white-space:nowrap;opacity:0;color:var(--white);transition:opacity .2s ease,transform .3s var(--ease-out)}
-  .custom-cursor.is-enter .cursor-label{opacity:1;transform:translateX(-50%) translateY(0)}
-  body.is-preloading .custom-cursor{opacity:0!important}
+@media (max-width:960px){
+  .hero-grid{grid-template-columns:1fr;padding-bottom:110px;gap:8px}
+  .hero-copy{max-width:640px}
+  .globe-wrap{max-width:min(560px,100%)}
+  .hero.has-selection .hero-copy{opacity:1;transform:none;filter:none;pointer-events:auto}
+  .dest-panel{position:fixed;z-index:70;left:0;right:0;top:auto;bottom:0;width:auto;max-height:86svh;border-radius:28px 28px 0 0;transform:translateY(40px);box-shadow:0 -20px 60px -20px color-mix(in srgb,#000 70%,transparent)}
+  .dest-panel.is-open{transform:none}
+  .hero-backdrop{display:block;position:fixed;z-index:69;inset:0;background:color-mix(in srgb,#000 55%,transparent);opacity:0;pointer-events:none;transition:opacity .35s ease}
+  .hero-backdrop.is-on{opacity:1;pointer-events:auto}
+  .dest-chips{justify-content:flex-start}
 }
 
 /* ---------- sections ---------- */
@@ -361,7 +335,6 @@ section{position:relative}
 .wa-float::before{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid var(--red);animation:ping 2.4s var(--ease-out) infinite}
 @keyframes ping{from{transform:scale(1);opacity:.7}to{transform:scale(1.6);opacity:0}}
 .wa-float.is-hidden{transform:scale(0) ;opacity:0;pointer-events:none}
-body.is-preloading .wa-float{opacity:0}
 
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
@@ -391,22 +364,13 @@ body.is-preloading .wa-float{opacity:0}
 }
 @media (max-width:760px){
   :root{--nav-h:68px}
-  .hero-grid{grid-template-columns:1fr;grid-template-rows:auto auto auto auto;grid-template-areas:"copy" "portal" "title" "facts";gap:22px;padding-top:calc(var(--nav-h) + 28px);padding-bottom:28px}
-  .hero-copy{align-self:start}
+  .hero-grid{padding-top:calc(var(--nav-h) + 24px)}
   .hero-copy h1{font-size:clamp(34px,10vw,48px)}
   .hero-copy p{margin-top:16px;font-size:16px}
   .hero-ctas{margin-top:22px}
-  .hero-ctas .btn{width:100%}
-  .portal-wrap{width:min(220px,60vw);margin-top:4px}
-  .portal-heading{justify-content:center;gap:6px;white-space:nowrap;font-size:14px}
-  .portal-heading strong{font-size:16px}
-  .hero-ctas .btn{padding:14px 18px;font-size:15px}
-  .portal{border-radius:64px}
-  .dest-title{font-size:clamp(44px,15vw,80px)}
-  .facts{max-width:none;justify-self:stretch;font-size:14px}
-  .fact{grid-template-columns:100px 1fr;gap:12px;padding:7px 0}
-  .dest-list{display:none}
-  .hero-shade{background:linear-gradient(to bottom,color-mix(in srgb,var(--navy-deep) 85%,transparent) 0%,color-mix(in srgb,var(--navy-deep) 55%,transparent) 45%,color-mix(in srgb,#000 85%,transparent) 100%)}
+  .hero-ctas .btn{width:100%;padding:14px 18px;font-size:15px}
+  .globe-hint{margin-top:20px;font-size:14px}
+  .g-label{font-size:12px;min-height:26px;padding:3px 10px;pointer-events:none}
   .stack-card{grid-template-columns:1fr;gap:12px;min-height:0;top:calc(var(--nav-h) + 12px + var(--i)*10px)}
   .stack-card .big{font-size:64px}
   .stats{grid-template-columns:1fr;gap:28px;margin-top:56px}
@@ -429,26 +393,13 @@ body.is-preloading .wa-float{opacity:0}
 }
 </style>
 </head>
-<body class="is-preloading">
+<body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.22 8.22 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.22-8.23 8.22zm4.51-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.13-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48a.92.92 0 0 0-.66.31c-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.29z"/></symbol>
   </defs>
 </svg>
-
-<!-- Preloader -->
-<div class="preloader" id="preloader" aria-hidden="true">
-  <img id="preloader-img" src="https://images.unsplash.com/photo-1587571594954-272f8cc473d0?auto=format&fit=crop&w=1600&q=60" alt="">
-  <div class="preloader-shade"></div>
-</div>
-<div class="preloader-count" id="preloader-count" aria-hidden="true">
-  <div class="num"><span id="preloader-value">0</span><span class="percent">%</span></div>
-  <span class="label">Preparando sua viagem</span>
-</div>
-<div class="floating-logo" id="floating-logo" aria-hidden="true">
-  <span class="logo"><img class="logo-mark" src="img/logo-emblem.webp" alt="" width="56" height="40"><span class="logo-word"><b>LOGOS<span>TOUR</span></b><small>Viagens e Turismo</small></span></span>
-</div>
 
 <!-- Navbar -->
 <header class="site-nav" id="site-nav">
@@ -479,11 +430,7 @@ body.is-preloading .wa-float{opacity:0}
 
 <main>
 <!-- Hero -->
-<section class="experience" id="inicio" aria-label="Apresentação">
-  <div class="backgrounds" id="backgrounds" aria-hidden="true"></div>
-  <div class="hero-shade" aria-hidden="true"></div>
-  <canvas id="portal-canvas" class="portal-canvas" aria-hidden="true"></canvas>
-
+<section class="hero" id="inicio" aria-label="Apresentação">
   <div class="hero-grid">
     <div class="hero-copy">
       <h1>Você escolhe o destino. <em>Eu cuido do resto.</em></h1>
@@ -492,19 +439,52 @@ body.is-preloading .wa-float{opacity:0}
         <a class="btn btn-primary btn-magnetic" data-wa href="#"><svg aria-hidden="true"><use href="#wa"/></svg>Pedir orçamento pelo WhatsApp</a>
         <a class="btn btn-ghost" href="#destinos">Ver destinos</a>
       </div>
+      <p class="globe-hint">Toque num destino do globo ou em qualquer país do mundo</p>
     </div>
-
-    <div class="portal-wrap chrome">
-      <div class="portal-heading"><span>Próximo destino:</span><span><strong id="next-name">Gramado</strong></span></div>
-      <button class="portal" id="portal" type="button" aria-label="Viajar para Gramado"></button>
-      <span class="portal-hint">Toque na janela para viajar</span>
+    <div class="globe-wrap" id="globe-wrap">
+      <canvas id="globe-canvas" role="img" aria-label="Globo com as rotas da Logos Tour saindo de Natal para Maceió, Porto de Galinhas, Maragogi, Gramado, Rio de Janeiro e Israel"></canvas>
+      <div class="globe-labels" id="globe-labels"></div>
     </div>
-
-    <p class="dest-title chrome" id="dest-title" aria-live="polite">Maceió</p>
-    <dl class="facts chrome" id="facts"></dl>
   </div>
 
-  <div class="dest-list chrome" id="dest-list" aria-label="Destinos"></div>
+  <div class="dest-chips" id="dest-chips" aria-label="Escolha um destino"></div>
+
+  <div class="hero-backdrop" id="hero-backdrop"></div>
+  <aside class="dest-panel" id="dest-panel" aria-labelledby="panel-title" aria-hidden="true">
+    <div class="panel-scroll">
+      <div class="panel-media" id="panel-media"></div>
+      <button class="panel-close" id="panel-close" type="button" aria-label="Fechar e voltar ao globo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+      <div class="panel-body">
+        <h2 id="panel-title">Destino</h2>
+        <p class="panel-sub" id="panel-sub"></p>
+        <ul class="panel-facts" id="panel-facts"></ul>
+        <form class="quote-form" id="quote-form">
+          <fieldset id="city-field">
+            <legend>Qual cidade? (opcional)</legend>
+            <input class="text-field" id="city-input" type="text" autocomplete="off" placeholder="Ex.: Lisboa, Orlando, Roma">
+          </fieldset>
+          <fieldset>
+            <legend>Quando quer viajar?</legend>
+            <div class="opts" id="opt-when"></div>
+          </fieldset>
+          <fieldset>
+            <legend>Quantas pessoas?</legend>
+            <div class="stepper">
+              <button type="button" id="ppl-minus" aria-label="Diminuir pessoas">-</button>
+              <output id="ppl-out" aria-live="polite">2</output>
+              <button type="button" id="ppl-plus" aria-label="Aumentar pessoas">+</button>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Quanto quer gastar por pessoa?</legend>
+            <div class="opts" id="opt-budget"></div>
+          </fieldset>
+          <button class="btn btn-primary" type="submit" id="quote-submit"><svg aria-hidden="true"><use href="#wa"/></svg><span>Pedir orçamento</span></button>
+          <p class="panel-note">Abre o WhatsApp do Edson com tudo preenchido.</p>
+        </form>
+      </div>
+    </div>
+  </aside>
 </section>
 
 <!-- Serviços -->
@@ -710,10 +690,8 @@ body.is-preloading .wa-float{opacity:0}
 
 <a class="wa-float" id="wa-float" data-wa href="#" aria-label="Pedir orçamento pelo WhatsApp"><svg aria-hidden="true"><use href="#wa"/></svg></a>
 
-<div class="custom-cursor" id="custom-cursor" aria-hidden="true">
-  <span class="cursor-orbit"></span><span class="cursor-dot"></span><span class="cursor-label">Viajar</span>
-</div>
 
+<script src="globe-data.js"></script>
 <script>
 (() => {
   'use strict';
@@ -728,19 +706,6 @@ body.is-preloading .wa-float{opacity:0}
   const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
   /* ---------- data ---------- */
-  const big = matchMedia('(min-width: 900px)').matches;
-  const DEST = [
-    { name: 'Maceió', img: U('1587571594954-272f8cc473d0', big ? 1800 : 900), alt: 'Praia de Maceió com coqueiros e mar verde',
-      facts: [['Destaque', 'Viagem das Bodas, já na 6ª edição'], ['Ideal para', 'casais'], ['Saída', 'Natal, de ônibus semi-leito']] },
-    { name: 'Gramado', img: big ? 'img/gramado-1600.webp' : 'img/gramado-800.webp', alt: 'Rua de Gramado com casas em estilo alpino e hortênsias ao entardecer',
-      facts: [['Destaque', 'Maria Fumaça e Trem do Vinho'], ['Ideal para', 'casais e famílias'], ['Melhor época', 'feriados e inverno']] },
-    { name: 'Rio', img: big ? 'img/rio-1600.webp' : 'img/rio-800.webp', alt: 'Cristo Redentor de costas para a Baía de Guanabara e o Pão de Açúcar',
-      facts: [['Destaque', 'Cristo Redentor e Pão de Açúcar'], ['Ideal para', 'famílias e grupos'], ['Saída', 'Natal, de avião']] },
-    { name: 'Israel', img: U('1614517453351-6c1522fc7a56', big ? 1800 : 900), alt: 'Cidade antiga de Jerusalém com a cúpula dourada',
-      facts: [['Destaque', 'Jerusalém e Mar da Galileia'], ['Ideal para', 'grupos de igreja'], ['Guia', 'falando português']] },
-    { name: 'Maragogi', img: U('1711805492345-403ca3e43dd1', big ? 1800 : 900), alt: 'Vista aérea do mar azul turquesa de Maragogi',
-      facts: [['Destaque', 'piscinas naturais'], ['Ideal para', 'famílias'], ['Distância', 'perto de Natal']] }
-  ];
   const CARDS = [
     { name: 'Maceió', text: 'Praia de água morna e a nossa Viagem das Bodas.', img: '1587571594954-272f8cc473d0', alt: 'Praia de Maceió com coqueiros' },
     { name: 'Gramado e Canela', text: 'Clima de serra, fondue e o passeio no Trem do Vinho.', local: 'img/gramado-800.webp', alt: 'Rua iluminada de Gramado com hortênsias' },
@@ -766,301 +731,388 @@ body.is-preloading .wa-float{opacity:0}
       <a class="btn btn-primary" href="${waLink(`Olá, Edson! Vim pelo site e quero saber sobre ${c.name}.`)}" target="_blank" rel="noopener">Quero esse destino</a></article>`;
   }).join('');
 
-  /* ---------- hero: portal experience ---------- */
-  const exp = $('.experience');
-  const bgWrap = $('#backgrounds');
-  const canvas = $('#portal-canvas');
-  const ctx = canvas.getContext('2d');
-  const portal = $('#portal');
-  const titleEl = $('#dest-title');
-  const factsEl = $('#facts');
-  const listEl = $('#dest-list');
-  const imgs = DEST.map((d, i) => {
-    const im = new Image();
-    im.decoding = 'async';
-    im.src = d.img;
-    const bg = document.createElement('img');
-    bg.className = 'background' + (i === 0 ? ' is-visible' : '');
-    bg.src = d.img;
-    bg.alt = '';
-    bgWrap.appendChild(bg);
-    return im;
-  });
-  const bgs = [...bgWrap.children];
+  /* ---------- hero: globe with routes from Natal ---------- */
+  const exp = $('#inicio');
+  const NATAL = { lon: -35.21, lat: -5.79 };
+  const FEATURED = [
+    { id: 'maceio', name: 'Maceió', lon: -35.735, lat: -9.665, dx: 52, dy: 32, img: U('1587571594954-272f8cc473d0', 900), alt: 'Praia de Maceió com coqueiros e mar verde',
+      sub: 'Saindo de Natal, de ônibus semi-leito.', facts: [['Destaque', 'Viagem das Bodas, já na 6ª edição'], ['Ideal para', 'casais'], ['Saída', 'Natal, de ônibus semi-leito']] },
+    { id: 'porto', name: 'Porto de Galinhas', lon: -35.00, lat: -8.50, dx: 60, dy: -40, img: U('1625841028984-5a4c1a657e19', 900), alt: 'Jangada nas piscinas naturais de Porto de Galinhas',
+      sub: 'Saindo de Natal.', facts: [['Destaque', 'piscinas naturais e passeio de jangada'], ['Ideal para', 'famílias e casais'], ['Saída', 'Natal']] },
+    { id: 'maragogi', name: 'Maragogi', lon: -35.22, lat: -9.01, dx: 56, dy: -2, img: U('1711805492345-403ca3e43dd1', 900), alt: 'Vista aérea do mar azul turquesa de Maragogi',
+      sub: 'Saindo de Natal.', facts: [['Destaque', 'piscinas naturais'], ['Ideal para', 'famílias'], ['Distância', 'perto de Natal']] },
+    { id: 'gramado', name: 'Gramado', lon: -50.87, lat: -29.37, dx: -18, dy: 26, img: 'img/gramado-800.webp', alt: 'Rua de Gramado com casas em estilo alpino e hortênsias ao entardecer',
+      sub: 'Saindo de Natal, de avião.', facts: [['Destaque', 'Maria Fumaça e Trem do Vinho'], ['Ideal para', 'casais e famílias'], ['Melhor época', 'feriados e inverno']] },
+    { id: 'rio', name: 'Rio de Janeiro', lon: -43.17, lat: -22.91, dx: 26, dy: 22, img: 'img/rio-800.webp', alt: 'Cristo Redentor de costas para a Baía de Guanabara e o Pão de Açúcar',
+      sub: 'Saindo de Natal, de avião.', facts: [['Destaque', 'Cristo Redentor e Pão de Açúcar'], ['Ideal para', 'famílias e grupos'], ['Saída', 'Natal, de avião']] },
+    { id: 'israel', name: 'Israel', lon: 35.21, lat: 31.77, dx: 0, dy: -30, img: U('1614517453351-6c1522fc7a56', 900), alt: 'Cidade antiga de Jerusalém com a cúpula dourada',
+      sub: 'Viagem em grupo com guia falando português.', facts: [['Destaque', 'Jerusalém e Mar da Galileia'], ['Ideal para', 'grupos de igreja'], ['Guia', 'falando português']] }
+  ];
 
-  let current = 0, busy = false, rendered = false;
-  let expansion = 0, maskScale = 0, zoom = 1;
-  let rotX = 0, rotY = 0, targetX = 0, targetY = 0;
-  let heroVisible = true, last = performance.now();
-  let W = 0, H = 0;
-  const nextIndex = () => (current + 1) % DEST.length;
-
-  function retrigger(el, cls) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
-
-  function fitTitle() {
-    titleEl.style.fontSize = '';
-    const max = titleEl.parentElement.clientWidth * (innerWidth > 760 ? .55 : 1) - 4;
-    let fs = parseFloat(getComputedStyle(titleEl).fontSize);
-    let guard = 0;
-    while (titleEl.scrollWidth > max && fs > 36 && guard++ < 40) { fs -= 4; titleEl.style.fontSize = fs + 'px'; }
+  const RAD = Math.PI / 180;
+  const wrapLon = l => ((l + 540) % 360) - 180;
+  const angDist = (a, b) => {
+    const s = Math.sin((b.lat - a.lat) * RAD / 2) ** 2 + Math.cos(a.lat * RAD) * Math.cos(b.lat * RAD) * Math.sin((b.lon - a.lon) * RAD / 2) ** 2;
+    return 2 * Math.asin(Math.min(1, Math.sqrt(s))) / RAD;
+  };
+  function slerp(a, b, t) {
+    const d = angDist(a, b) * RAD;
+    if (d < 1e-6) return { ...a };
+    const A = Math.sin((1 - t) * d) / Math.sin(d), B = Math.sin(t * d) / Math.sin(d);
+    const p = c => [Math.cos(c.lat * RAD) * Math.cos(c.lon * RAD), Math.cos(c.lat * RAD) * Math.sin(c.lon * RAD), Math.sin(c.lat * RAD)];
+    const [x1, y1, z1] = p(a), [x2, y2, z2] = p(b);
+    const x = A * x1 + B * x2, y = A * y1 + B * y2, z = A * z1 + B * z2;
+    return { lon: Math.atan2(y, x) / RAD, lat: Math.atan2(z, Math.hypot(x, y)) / RAD };
   }
 
-  function render() {
-    const d = DEST[current], n = DEST[nextIndex()];
-    titleEl.textContent = d.name;
-    $('#next-name').textContent = n.name;
-    portal.setAttribute('aria-label', `Viajar para ${n.name}`);
-    factsEl.innerHTML = d.facts.map(([k, v]) => `<div class="fact"><dt>${k}:</dt><dd>${v}</dd></div>`).join('');
-    listEl.innerHTML = DEST.map((x, i) => `<button type="button" class="dest-item${i === current ? ' active' : ''}" data-i="${i}" aria-label="Ver ${x.name}"${i === current ? ' aria-current="true"' : ''}>${x.name}</button>`).join('');
-    if (rendered) retrigger(listEl, 'is-switching');
-    rendered = true;
-    bgs.forEach((b, i) => {
-      if (i === current) { b.classList.remove('is-visible'); void b.offsetWidth; b.classList.add('is-visible'); }
-      else b.classList.remove('is-visible');
-    });
-    fitTitle();
+  // land dots (precomputed): lon/lat x100 as Int16 pairs, country index per dot
+  const GD = window.GLOBE_DATA;
+  const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const llRaw = new Int16Array(b64(GD.ll).buffer);
+  const ci = b64(GD.ci);
+  const N = ci.length;
+  const dLon = new Float32Array(N), dLat = new Float32Array(N);
+  const cosLat = new Float32Array(N), sinLat = new Float32Array(N);
+  for (let i = 0; i < N; i++) {
+    dLon[i] = llRaw[2 * i] / 100 * RAD; dLat[i] = llRaw[2 * i + 1] / 100 * RAD;
+    cosLat[i] = Math.cos(dLat[i]); sinLat[i] = Math.sin(dLat[i]);
+  }
+  const sx = new Float32Array(N), sy = new Float32Array(N), sv = new Uint8Array(N);
+  const brazilIdx = GD.names.indexOf('Brasil');
+
+  const wrap = $('#globe-wrap'), canvas = $('#globe-canvas'), ctx = canvas.getContext('2d');
+  const labelsEl = $('#globe-labels');
+  let W = 0, H = 0, B = 0, R = 0, CX = 0, CY = 0, dpr = 1;
+  const HOME = { lon: -16, lat: -6 };
+  const view = { lon: HOME.lon, lat: HOME.lat, k: 1 };
+  const target = { lon: HOME.lon, lat: HOME.lat, k: 1 };
+  let selected = null;           // featured object or {world:true, lon, lat, country}
+  let hoverCountry = -1, dragging = false, lastInteract = 0, heroVisible = true, t0 = performance.now();
+
+  function resize() {
+    // canvas covers the whole hero grid so a zoomed globe is never cut square;
+    // the globe itself stays centred on the wrap box
+    const c = canvas.getBoundingClientRect(), r = wrap.getBoundingClientRect();
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = c.width; H = c.height; B = r.width;
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    CX = r.left - c.left + r.width / 2; CY = r.top - c.top + r.height / 2;
   }
 
-  function resizeCanvas() {
-    const r = exp.getBoundingClientRect();
-    W = r.width; H = r.height;
-    const d = Math.min(devicePixelRatio || 1, 2);
-    canvas.width = Math.round(W * d); canvas.height = Math.round(H * d);
-    ctx.setTransform(d, 0, 0, d, 0, 0);
+  // orthographic projection with optional altitude
+  function proj(lon, lat, alt) {
+    const l0 = view.lon * RAD, p0 = view.lat * RAD;
+    const cl = Math.cos(lat), dl = lon - l0;
+    const x = cl * Math.sin(dl);
+    const y = Math.cos(p0) * Math.sin(lat) - Math.sin(p0) * cl * Math.cos(dl);
+    const z = Math.sin(p0) * Math.sin(lat) + Math.cos(p0) * cl * Math.cos(dl);
+    const s = R * (1 + (alt || 0));
+    return [CX + x * s, CY - y * s, z];
   }
 
-  function drawCover(c, media, z) {
-    const mw = media.naturalWidth || media.videoWidth, mh = media.naturalHeight || media.videoHeight;
-    if (!mw || !mh) return;
-    const s = Math.max(W / mw, H / mh) * (z || 1);
-    const w = mw * s, h = mh * s;
-    c.drawImage(media, (W - w) / 2, (H - h) / 2, w, h);
-  }
-
-  function roundedPoints(w, h, r) {
-    r = Math.min(r, w / 2, h / 2);
-    const arcs = [[w / 2 - r, -h / 2 + r, -Math.PI / 2, 0], [w / 2 - r, h / 2 - r, 0, Math.PI / 2], [-w / 2 + r, h / 2 - r, Math.PI / 2, Math.PI], [-w / 2 + r, -h / 2 + r, Math.PI, Math.PI * 1.5]];
+  // route geometry: great circle from Natal lifted into an arc
+  function routePoints(dest, steps) {
+    const d = angDist(NATAL, dest);
+    const h = Math.min(.42, .04 + d * .0042);
     const pts = [];
-    for (const [cx, cy, a0, a1] of arcs) for (let k = 0; k <= 10; k++) {
-      const a = a0 + (a1 - a0) * k / 10;
-      pts.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]);
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps, p = slerp(NATAL, dest, t);
+      pts.push(proj(p.lon * RAD, p.lat * RAD, Math.sin(Math.PI * t) * h));
     }
     return pts;
   }
 
-  function project([x, y], rx, ry, cx, cy) {
-    const ax = rx * Math.PI / 180, ay = ry * Math.PI / 180;
-    const xx = x * Math.cos(ay), yy = y * Math.cos(ax);
-    const z = x * Math.sin(ay) - y * Math.sin(ax);
-    const p = 850 / (850 + z);
-    return [cx + xx * p, cy + yy * p];
-  }
-
-  function draw(now) {
-    requestAnimationFrame(draw);
-    const dt = Math.min(40, now - last); last = now;
-    if (!heroVisible) return;
-    rotX += (targetX - rotX) * Math.min(1, dt * .009);
-    rotY += (targetY - rotY) * Math.min(1, dt * .009);
-    ctx.clearRect(0, 0, W, H);
-    const hr = exp.getBoundingClientRect();
-    const pr = portal.getBoundingClientRect();
-    if (!pr.width) return;
-    const e = expansion;
-    const pcx = pr.left - hr.left + pr.width / 2, pcy = pr.top - hr.top + pr.height / 2;
-    const cx = pcx + (W / 2 - pcx) * e, cy = pcy + (H / 2 - pcy) * e;
-    const baseW = pr.width + (W - pr.width) * e, baseH = pr.height + (H - pr.height) * e;
-    const scale = e ? 1 : maskScale;
-    const w = baseW * scale, h = baseH * scale;
-    const radius = parseFloat(getComputedStyle(portal).borderTopLeftRadius) || 90;
-    const r = radius * (1 - e) * scale, rx = rotX * (1 - e), ry = rotY * (1 - e);
-    if (w > 1 && h > 1) {
-      const pts = roundedPoints(w, h, r).map(p => project(p, rx, ry, cx, cy));
-      ctx.save();
-      ctx.beginPath();
-      pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
-      ctx.closePath();
-      ctx.clip();
-      ctx.fillStyle = '#16307A';
-      ctx.fillRect(0, 0, W, H);
-      drawCover(ctx, imgs[nextIndex()], zoom);
-      if (e > 0) {
-        const g = ctx.createLinearGradient(0, H * .52, 0, H);
-        g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, `rgba(0,0,0,${.6 * e})`);
-        ctx.fillStyle = g; ctx.fillRect(0, H * .52, W, H * .48);
-      }
-      ctx.restore();
-      ctx.save();
-      ctx.beginPath();
-      pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
-      ctx.closePath();
-      ctx.strokeStyle = `rgba(255,255,255,${.55 * (1 - e)})`;
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-      ctx.restore();
-    }
-  }
-
-  function animateValue(setter, duration) {
-    if (reduced) { setter(1); return Promise.resolve(); }
-    return new Promise(res => {
-      const t0 = performance.now();
-      const step = now => {
-        const t = clamp((now - t0) / duration, 0, 1);
-        setter(ease(t));
-        t < 1 ? requestAnimationFrame(step) : res();
-      };
-      requestAnimationFrame(step);
-    });
-  }
-  const wait = ms => new Promise(r => setTimeout(r, ms));
-  const frames = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-  const imgReady = im => im.complete && im.naturalWidth ? Promise.resolve() : new Promise(r => { im.onload = im.onerror = r; setTimeout(r, 4000); });
-
-  function revealMask() {
-    retrigger(exp, 'mask-revealing');
-    maskScale = 0;
-    return animateValue(v => maskScale = v, 1050);
-  }
-  function revealPlanetContent() { retrigger(exp, 'content-revealing'); }
-
-  async function travel(to) {
-    if (busy) return;
-    const target = typeof to === 'number' ? to : nextIndex();
-    if (target === current) return;
-    busy = true; targetX = targetY = 0;
-    try {
-      // the portal always shows the next destination; jumping elsewhere swaps it first
-      if (target !== nextIndex()) { current = (target - 1 + DEST.length) % DEST.length; }
-      await imgReady(imgs[target]);
-      exp.classList.remove('content-revealing', 'mask-revealing', 'is-settled');
-      exp.classList.add('is-transitioning');
-      await animateValue(v => { expansion = v; zoom = 1.12 - .12 * v; }, 1100);
-      current = target;
-      exp.classList.add('is-committing');
-      render();
-      await frames();
-      expansion = 0; zoom = 1; maskScale = 0;
-      exp.classList.remove('is-transitioning', 'is-committing');
-      const m = revealMask();
-      setTimeout(revealPlanetContent, 100);
-      await m;
-      await wait(450);
-    } catch (err) {
-      expansion = 0; maskScale = 1; zoom = 1;
-      exp.classList.remove('is-transitioning', 'is-committing', 'is-loading');
-    }
-    busy = false;
-    scheduleAuto();
-  }
-
-  portal.addEventListener('click', () => travel());
-  listEl.addEventListener('click', e => { const b = e.target.closest('.dest-item'); if (b) travel(+b.dataset.i); });
-
-  // gentle autoplay so visitors who never click still see the destinations
-  let autoTimer = 0, hovering = false;
-  function scheduleAuto() {
-    clearTimeout(autoTimer);
-    if (reduced) return;
-    autoTimer = setTimeout(() => { if (!hovering && heroVisible && !document.hidden) travel(); else scheduleAuto(); }, 7000);
-  }
-
-  // pointer tilt
-  exp.addEventListener('pointermove', e => {
-    if (busy || e.pointerType !== 'mouse') return;
-    targetY = (e.clientX / innerWidth - .5) * 37.4;
-    targetX = (e.clientY / innerHeight - .5) * -33;
+  // routes and labels
+  FEATURED.forEach(f => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'g-label'; b.textContent = f.name;
+    b.setAttribute('aria-label', `Ver ${f.name} e pedir orçamento`);
+    b.addEventListener('click', e => { e.stopPropagation(); selectFeatured(f); });
+    labelsEl.appendChild(b); f.el = b;
   });
-  exp.addEventListener('pointerleave', () => { targetX = targetY = 0; });
-  portal.addEventListener('pointerenter', () => { hovering = true; });
-  portal.addEventListener('pointerleave', () => { hovering = false; });
+  const natalLabel = document.createElement('span');
+  natalLabel.className = 'g-label is-origin'; natalLabel.textContent = 'Natal'; natalLabel.setAttribute('aria-hidden', 'true');
+  labelsEl.appendChild(natalLabel);
+  const tip = document.createElement('div');
+  tip.className = 'g-tip'; tip.setAttribute('aria-hidden', 'true');
+  labelsEl.appendChild(tip);
+
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (!heroVisible || !W) return;
+    const t = (now - t0) / 1000;
+    // idle sway when nothing is selected
+    if (!selected && !dragging && now - lastInteract > 2500) {
+      target.lon = HOME.lon + Math.sin(t * .12) * 14;
+      target.lat = HOME.lat + Math.sin(t * .09) * 4;
+      target.k = 1;
+    }
+    const e = reduced ? 1 : .07;
+    view.lon += wrapLon(target.lon - view.lon) * e;
+    view.lat += (target.lat - view.lat) * e;
+    view.k += (target.k - view.k) * e;
+    R = B / 2 * .86 * view.k;
+
+    ctx.clearRect(0, 0, W, H);
+    // glow
+    let g = ctx.createRadialGradient(CX, CY, R * .9, CX, CY, R * 1.22);
+    g.addColorStop(0, 'rgba(245,158,43,.28)'); g.addColorStop(1, 'rgba(245,158,43,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(CX, CY, R * 1.22, 0, Math.PI * 2); ctx.fill();
+    // ocean
+    ctx.fillStyle = '#16307A'; ctx.beginPath(); ctx.arc(CX, CY, R, 0, Math.PI * 2); ctx.fill();
+    g = ctx.createRadialGradient(CX - R * .35, CY - R * .4, R * .1, CX, CY, R);
+    g.addColorStop(0, 'rgba(255,255,255,.14)'); g.addColorStop(1, 'rgba(0,0,0,.35)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(CX, CY, R, 0, Math.PI * 2); ctx.fill();
+
+    // land dots
+    const l0 = view.lon * RAD, p0 = view.lat * RAD, cp0 = Math.cos(p0), sp0 = Math.sin(p0);
+    const size = Math.max(1.1, Math.min(3.2, R / 210));
+    const selCountry = selected && selected.world ? selected.country : (selected ? brazilIdx : -1);
+    for (let pass = 0; pass < 2; pass++) {
+      ctx.fillStyle = pass === 0 ? '#FFF8EE' : '#F59E2B';
+      for (let i = 0; i < N; i++) {
+        const dl = dLon[i] - l0, cdl = Math.cos(dl);
+        const z = sp0 * sinLat[i] + cp0 * cosLat[i] * cdl;
+        if (pass === 0) {
+          sv[i] = 0;
+          if (z <= 0) continue;
+          const x = cosLat[i] * Math.sin(dl), y = cp0 * sinLat[i] - sp0 * cosLat[i] * cdl;
+          sx[i] = CX + x * R; sy[i] = CY - y * R;
+          if (sx[i] < -4 || sx[i] > W + 4 || sy[i] < -4 || sy[i] > H + 4) continue;
+          sv[i] = 1;
+          const hot = ci[i] === hoverCountry || ci[i] === selCountry;
+          if (hot) continue;
+          ctx.globalAlpha = .18 + .6 * z;
+          ctx.fillRect(sx[i] - size / 2, sy[i] - size / 2, size, size);
+        } else {
+          if (!sv[i] || !(ci[i] === hoverCountry || ci[i] === selCountry)) continue;
+          ctx.globalAlpha = .45 + .55 * z;
+          ctx.fillRect(sx[i] - size * .6, sy[i] - size * .6, size * 1.2, size * 1.2);
+        }
+      }
+    }
+    ctx.globalAlpha = 1;
+
+    // routes
+    const routes = selected && selected.world ? FEATURED.concat([selected]) : FEATURED;
+    routes.forEach(d => {
+      const pts = routePoints({ lon: d.lon, lat: d.lat }, 48);
+      const active = selected === d;
+      ctx.lineWidth = active ? 2.6 : 1.4;
+      ctx.strokeStyle = active ? '#E63946' : (selected ? 'rgba(245,158,43,.35)' : 'rgba(245,158,43,.85)');
+      ctx.beginPath();
+      let pen = false;
+      pts.forEach(([x, y, z]) => {
+        if (z > -0.02) { pen ? ctx.lineTo(x, y) : ctx.moveTo(x, y); pen = true; } else pen = false;
+      });
+      ctx.stroke();
+      // traveling light
+      const prog = ((t * (active ? .55 : .3) + d.lon * .013) % 1 + 1) % 1;
+      const p = pts[Math.round(prog * (pts.length - 1))];
+      if (p[2] > 0) {
+        ctx.fillStyle = active ? '#FFFFFF' : '#FFF8EE';
+        ctx.beginPath(); ctx.arc(p[0], p[1], active ? 3.2 : 2.2, 0, Math.PI * 2); ctx.fill();
+      }
+    });
+
+    // pins and labels
+    const pulse = (t * 1.2) % 1;
+    const pin = (lon, lat, color, r) => {
+      const [x, y, z] = proj(lon * RAD, lat * RAD);
+      if (z <= 0) return [x, y, z];
+      ctx.strokeStyle = color; ctx.globalAlpha = 1 - pulse; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(x, y, r + pulse * 10, 0, Math.PI * 2); ctx.stroke();
+      ctx.globalAlpha = 1; ctx.fillStyle = color;
+      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+      return [x, y, z];
+    };
+    const place = (el, x, y, z, dx, dy) => {
+      el.classList.toggle('is-hidden', z < .2);
+      el.style.transform = `translate(${x + dx}px, ${y + dy}px) translate(-50%,-50%)`;
+    };
+    FEATURED.forEach(f => {
+      const [x, y, z] = pin(f.lon, f.lat, selected === f ? '#FFFFFF' : '#E63946', 3.6);
+      const spread = Math.min(1, 1.6 / view.k);
+      if (z > 0 && f.dx) {
+        ctx.strokeStyle = 'rgba(255,248,238,.55)'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + f.dx * spread * .7, y + f.dy * spread * .7); ctx.stroke();
+      }
+      place(f.el, x, y, z, f.dx * spread, f.dy * spread);
+      f.el.classList.toggle('is-active', selected === f);
+    });
+    const [nx, ny, nz] = pin(NATAL.lon, NATAL.lat, '#F59E2B', 4.6);
+    place(natalLabel, nx, ny, nz, -46, -4);
+    if (selected && selected.world) pin(selected.lon, selected.lat, '#E63946', 4);
+  }
+
+  /* --- picking --- */
+  function nearestDot(px, py, maxD) {
+    let best = -1, bd = maxD * maxD;
+    for (let i = 0; i < N; i++) {
+      if (!sv[i]) continue;
+      const dx = sx[i] - px, dy = sy[i] - py, d = dx * dx + dy * dy;
+      if (d < bd) { bd = d; best = i; }
+    }
+    return best;
+  }
+  function localXY(e) { const r = canvas.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
+
+  let down = null;
+  canvas.addEventListener('pointerdown', e => {
+    down = { x: e.clientX, y: e.clientY, lon: target.lon, lat: target.lat, moved: false, id: e.pointerId, type: e.pointerType };
+    lastInteract = performance.now();
+  });
+  addEventListener('pointermove', e => {
+    if (down && e.pointerId === down.id) {
+      const dx = e.clientX - down.x, dy = e.clientY - down.y;
+      if (!down.moved && Math.hypot(dx, dy) > 6) {
+        // on touch, a mostly vertical move is a page scroll, not a globe drag
+        if (down.type !== 'mouse' && Math.abs(dy) > Math.abs(dx)) { down = null; return; }
+        down.moved = true; dragging = true; canvas.classList.add('is-dragging');
+        try { canvas.setPointerCapture(e.pointerId); } catch (err) {}
+      }
+      if (down.moved) {
+        const deg = 90 / R;
+        target.lon = view.lon = down.lon - dx * deg;
+        target.lat = view.lat = clamp(down.lat + dy * deg, -60, 60);
+        lastInteract = performance.now();
+      }
+      return;
+    }
+    if (e.pointerType === 'mouse' && e.target === canvas) {
+      const [x, y] = localXY(e);
+      const i = nearestDot(x, y, 9);
+      hoverCountry = i >= 0 ? ci[i] : -1;
+      canvas.classList.toggle('is-hovering', i >= 0);
+      if (i >= 0) {
+        tip.innerHTML = `${GD.names[ci[i]]}<small>Clique para pedir orçamento</small>`;
+        tip.style.left = x + 'px'; tip.style.top = y + 'px';
+        tip.classList.add('is-on');
+      } else tip.classList.remove('is-on');
+    }
+  });
+  canvas.addEventListener('pointerleave', () => { hoverCountry = -1; tip.classList.remove('is-on'); canvas.classList.remove('is-hovering'); });
+  addEventListener('pointerup', e => {
+    if (!down || e.pointerId !== down.id) return;
+    const wasDrag = down.moved;
+    down = null; dragging = false; canvas.classList.remove('is-dragging');
+    lastInteract = performance.now();
+    if (wasDrag || e.target !== canvas) return;
+    const [x, y] = localXY(e);
+    // featured pins win when the tap lands close to one
+    let best = null, bd = 22 * 22;
+    FEATURED.forEach(f => {
+      const [px, py, pz] = proj(f.lon * RAD, f.lat * RAD);
+      const d = (px - x) ** 2 + (py - y) ** 2;
+      if (pz > 0 && d < bd) { bd = d; best = f; }
+    });
+    if (best) { selectFeatured(best); return; }
+    const i = nearestDot(x, y, e.pointerType === 'mouse' ? 9 : 18);
+    if (i >= 0) selectWorld(llRaw[2 * i] / 100, llRaw[2 * i + 1] / 100, ci[i]);
+  });
+  addEventListener('pointercancel', () => { down = null; dragging = false; canvas.classList.remove('is-dragging'); });
+
+  /* --- selection + panel --- */
+  const panel = $('#dest-panel'), media = $('#panel-media'), ptitle = $('#panel-title'), psub = $('#panel-sub'), pfacts = $('#panel-facts');
+  const cityField = $('#city-field'), cityInput = $('#city-input'), submitLabel = $('#quote-submit span');
+  const backdrop = $('#hero-backdrop');
+  const chipsEl = $('#dest-chips');
+  chipsEl.innerHTML = FEATURED.map((f, i) => `<button type="button" class="chip" data-i="${i}">${f.name}</button>`).join('') +
+    '<button type="button" class="chip chip-world" data-world="1">Outro destino no mundo</button>';
+  chipsEl.addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if (!b) return;
+    if (b.dataset.world) selectWorld(null, null, -1); else selectFeatured(FEATURED[+b.dataset.i]);
+  });
+
+  function focusView(dest) {
+    const d = angDist(NATAL, dest);
+    const c = slerp(NATAL, dest, .62);
+    const mobile = innerWidth <= 960;
+    target.lon = c.lon; target.lat = clamp(c.lat, -50, 50);
+    target.k = clamp((mobile ? 30 : 44) / Math.max(d, 1), 1.05, mobile ? 2.4 : 3.1);
+  }
+
+  function openPanel(name) {
+    selectedName = name;
+    submitLabel.textContent = `Pedir orçamento para ${name}`;
+    panel.classList.add('is-open'); panel.setAttribute('aria-hidden', 'false');
+    exp.classList.add('has-selection');
+    backdrop.classList.add('is-on');
+    panel.querySelector('.panel-scroll').scrollTop = 0;
+    chipsEl.querySelectorAll('.chip').forEach(c => c.classList.toggle('is-active',
+      selected && (selected.world ? !!c.dataset.world : FEATURED[+c.dataset.i] === selected)));
+    setTimeout(() => $('#panel-close').focus({ preventScroll: true }), 50);
+  }
+  let selectedName = '';
+  function selectFeatured(f) {
+    selected = f; lastInteract = performance.now();
+    focusView(f);
+    media.className = 'panel-media';
+    media.innerHTML = `<img src="${f.img}" alt="${f.alt}" decoding="async">`;
+    ptitle.textContent = f.name;
+    psub.textContent = f.sub;
+    pfacts.innerHTML = f.facts.map(([k, v]) => `<li><b>${k}</b><span>${v}</span></li>`).join('');
+    pfacts.hidden = false;
+    cityField.hidden = true;
+    openPanel(f.name);
+  }
+  function selectWorld(lon, lat, country) {
+    const name = country >= 0 ? GD.names[country] : 'qualquer lugar do mundo';
+    selected = { world: true, lon: lon ?? 0, lat: lat ?? 30, country, name };
+    lastInteract = performance.now();
+    if (lon !== null) focusView({ lon, lat }); else { target.lon = 0; target.lat = 20; target.k = 1; }
+    media.className = 'panel-media is-world';
+    media.innerHTML = '<span>Passagens e pacotes para o mundo todo</span>';
+    ptitle.textContent = country >= 0 ? `Viagem para ${name}` : 'Para onde você quer ir?';
+    psub.textContent = country >= 0 ? 'Me diga as datas e o orçamento que eu monto as opções saindo de Natal.' : 'Escreva a cidade ou o país e eu monto as opções saindo de Natal.';
+    pfacts.hidden = true; pfacts.innerHTML = '';
+    cityField.hidden = false;
+    cityField.querySelector('legend').textContent = country >= 0 ? 'Qual cidade? (opcional)' : 'Qual destino?';
+    cityInput.value = '';
+    openPanel(country >= 0 ? name : 'o seu destino');
+  }
+  function closePanel() {
+    selected = null; lastInteract = performance.now() - 2000;
+    panel.classList.remove('is-open'); panel.setAttribute('aria-hidden', 'true');
+    exp.classList.remove('has-selection');
+    backdrop.classList.remove('is-on');
+    chipsEl.querySelectorAll('.chip').forEach(c => c.classList.remove('is-active'));
+  }
+  $('#panel-close').addEventListener('click', closePanel);
+  backdrop.addEventListener('click', closePanel);
+  addEventListener('keydown', e => { if (e.key === 'Escape' && panel.classList.contains('is-open')) closePanel(); });
+
+  // quote form
+  const monthFmt = new Intl.DateTimeFormat('pt-BR', { month: 'long' });
+  const nowD = new Date();
+  const months = [];
+  for (let i = 1; i <= 6; i++) {
+    const d = new Date(nowD.getFullYear(), nowD.getMonth() + i, 1);
+    const m = monthFmt.format(d);
+    months.push(`${m[0].toUpperCase()}${m.slice(1)} ${d.getFullYear()}`);
+  }
+  months.push('Ainda não sei');
+  const budgets = ['Até R$ 2 mil', 'R$ 2 a 5 mil', 'R$ 5 a 10 mil', 'Acima de R$ 10 mil', 'Quero uma sugestão'];
+  const opts = (name, list, checked) => list.map((v, i) => `<label class="opt"><input type="radio" name="${name}" value="${v}"${i === checked ? ' checked' : ''}><span>${v}</span></label>`).join('');
+  $('#opt-when').innerHTML = opts('when', months, months.length - 1);
+  $('#opt-budget').innerHTML = opts('budget', budgets, budgets.length - 1);
+  let people = 2;
+  const pplOut = $('#ppl-out');
+  $('#ppl-minus').addEventListener('click', () => { people = Math.max(1, people - 1); pplOut.textContent = people; });
+  $('#ppl-plus').addEventListener('click', () => { people = Math.min(60, people + 1); pplOut.textContent = people; });
+  $('#quote-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = e.target;
+    const city = cityInput.value.trim();
+    let dest = selectedName;
+    if (selected && selected.world) dest = selected.country >= 0 ? (city ? `${city}, ${selected.name}` : selected.name) : (city || 'um destino que ainda vou definir');
+    const msg = [`Olá, Edson! Vim pelo site e quero um orçamento para ${dest}.`,
+      `Quando: ${f.when.value}`, `Pessoas: ${people}`, `Orçamento por pessoa: ${f.budget.value}`].join('\n');
+    window.open(waLink(msg), '_blank', 'noopener');
+  });
 
   new IntersectionObserver(([en]) => { heroVisible = en.isIntersecting; }, { threshold: 0 }).observe(exp);
-
-  /* ---------- custom cursor ---------- */
-  if (finePointer) {
-    const cur = $('#custom-cursor'), orbit = cur.querySelector('.cursor-orbit'), dot = cur.querySelector('.cursor-dot'), label = cur.querySelector('.cursor-label');
-    let mx = -100, my = -100, ox = -100, oy = -100;
-    addEventListener('pointermove', e => {
-      if (e.pointerType !== 'mouse') return;
-      mx = e.clientX; my = e.clientY;
-      const inHero = exp.contains(e.target);
-      cur.classList.toggle('is-visible', inHero);
-      cur.classList.toggle('is-link', inHero && !!e.target.closest('a,button:not(.portal)'));
-    });
-    document.addEventListener('mouseleave', () => cur.classList.remove('is-visible'));
-    addEventListener('scroll', () => {
-      const el = document.elementFromPoint(mx, my);
-      cur.classList.toggle('is-visible', !!el && exp.contains(el));
-    }, { passive: true });
-    portal.addEventListener('pointerenter', () => cur.classList.add('is-enter'));
-    portal.addEventListener('pointerleave', () => cur.classList.remove('is-enter'));
-    (function loop() {
-      ox += (mx - ox) * .2; oy += (my - oy) * .2;
-      orbit.style.transform = '';
-      cur.style.transform = 'translate3d(0,0,0)';
-      dot.style.left = mx + 'px'; dot.style.top = my + 'px';
-      orbit.style.left = ox + 'px'; orbit.style.top = oy + 'px';
-      label.style.left = ox + 'px'; label.style.top = (oy + 30) + 'px';
-      requestAnimationFrame(loop);
-    })();
-  }
-
-  /* ---------- preloader ---------- */
-  const pre = $('#preloader'), count = $('#preloader-count'), val = $('#preloader-value'), flo = $('#floating-logo'), navLogo = $('#nav-logo');
-
-  function placeFloatingCenter() {
-    const r = flo.getBoundingClientRect();
-    const s = innerWidth < 600 ? 1.25 : 1.6;
-    flo.style.transform = `translate(${(innerWidth - r.width * s) / 2}px, ${(innerHeight - r.height * s) / 2 - 20}px) scale(${s})`;
-  }
-
-  function runPreloader() {
-    placeFloatingCenter();
-    const minTime = reduced ? 200 : 2600;
-    const t0 = performance.now();
-    let loaded = 0;
-    const toLoad = [imgs[0], imgs[1], $('#preloader-img')];
-    toLoad.forEach(im => imgReady(im).then(() => loaded++));
-    const fontsReady = document.fonts ? document.fonts.ready.then(() => loaded++) : (loaded++, null);
-    const total = toLoad.length + 1;
-    requestAnimationFrame(() => pre.classList.add('is-running'));
-    let shown = 0, done = false;
-    (function tick(now) {
-      if (done) return;
-      const timeP = clamp((now - t0) / minTime, 0, 1);
-      const loadP = loaded / total;
-      const hardCap = now - t0 > 7000;
-      const target = Math.min(timeP, hardCap ? 1 : Math.max(loadP, .12 + timeP * .2)) * 100;
-      shown += (target - shown) * .12;
-      if (target >= 100 && shown > 99.4) shown = 100;
-      val.textContent = Math.round(shown);
-      if (shown >= 100) { done = true; finish(); return; }
-      requestAnimationFrame(tick);
-    })(t0);
-  }
-
-  function finish() {
-    val.textContent = '100';
-    count.classList.add('is-leaving');
-    const target = navLogo.getBoundingClientRect();
-    flo.classList.add('is-flying');
-    flo.style.transform = `translate(${target.left}px, ${target.top}px) scale(1)`;
-    pre.classList.add('is-done');
-    document.body.classList.remove('is-preloading');
-    startExperience();
-    setTimeout(() => count.remove(), 800);
-    setTimeout(() => { flo.remove(); }, reduced ? 50 : 1650);
-  }
-
-  async function startExperience() {
-    await imgReady(imgs[nextIndex()]);
-    document.body.classList.add('intro-ready');
-    await revealMask();
-    setTimeout(() => { revealPlanetContent(); }, 300);
-    setTimeout(() => { exp.classList.add('is-settled'); }, 1700);
-    scheduleAuto();
-  }
 
   /* ---------- nav ---------- */
   const nav = $('#site-nav');
@@ -1098,7 +1150,7 @@ body.is-preloading .wa-float{opacity:0}
   }
   if (smooth.on) {
     addEventListener('wheel', e => {
-      if (e.ctrlKey || document.body.classList.contains('is-preloading') || document.body.classList.contains('menu-open')) return;
+      if (e.ctrlKey || document.body.classList.contains('menu-open')) return;
       if (e.target.closest('iframe, .map')) return;
       e.preventDefault();
       const unit = e.deltaMode === 1 ? 32 : e.deltaMode === 2 ? innerHeight : 1;
@@ -1239,17 +1291,16 @@ body.is-preloading .wa-float{opacity:0}
   let ticking = false;
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { onScroll(); ticking = false; }); } }, { passive: true });
   let rT = 0;
-  addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { resizeCanvas(); layoutPin(); fitTitle(); onScroll(); }, 120); });
+  addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { resize(); layoutPin(); onScroll(); }, 120); });
 
   /* ---------- boot ---------- */
-  resizeCanvas();
-  render();
+  resize();
+  requestAnimationFrame(frame);
   layoutPin();
   onScroll();
-  requestAnimationFrame(draw);
-  if (document.fonts) document.fonts.ready.then(() => { fitTitle(); layoutPin(); });
+  requestAnimationFrame(() => document.body.classList.add('intro-ready'));
+  if (document.fonts) document.fonts.ready.then(() => layoutPin());
   addEventListener('load', () => { layoutPin(); onScroll(); });
-  runPreloader();
 })();
 </script>
 </body>
