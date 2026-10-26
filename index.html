@@ -838,14 +838,17 @@ section{position:relative}
   tip.className = 'g-tip'; tip.setAttribute('aria-hidden', 'true');
   labelsEl.appendChild(tip);
 
+  const SPIN = 7;                // degrees per second
+  let lastFrame = 0;
   function frame(now) {
     requestAnimationFrame(frame);
     if (!heroVisible || !W) return;
     const t = (now - t0) / 1000;
-    // idle sway when nothing is selected
+    const dt = Math.min(.05, (now - (lastFrame || now)) / 1000); lastFrame = now;
+    // idle spin when nothing is selected; holds still while the pointer is on a country
     if (!selected && !dragging && now - lastInteract > 2500) {
-      target.lon = HOME.lon + Math.sin(t * .12) * 14;
-      target.lat = HOME.lat + Math.sin(t * .09) * 4;
+      if (!reduced && hoverCountry < 0) target.lon = wrapLon(target.lon - SPIN * dt);
+      target.lat += (HOME.lat - target.lat) * .02;
       target.k = 1;
     }
     const e = reduced ? 1 : .07;
