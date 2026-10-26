@@ -195,8 +195,8 @@ section{position:relative}
 .bg-tint{background:var(--orange-tint)}
 
 /* word reveal */
-.split .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
-.split .w>span{display:inline-block;transform:translateY(105%);transition:transform 1s var(--ease-expo);transition-delay:calc(var(--i)*55ms)}
+.split .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.22em;margin-bottom:-.22em}
+.split .w>span{display:inline-block;transform:translateY(120%);transition:transform 1s var(--ease-expo);transition-delay:calc(var(--i)*55ms)}
 .split.is-in .w>span{transform:translateY(0)}
 
 /* generic reveal */
@@ -1254,7 +1254,10 @@ section{position:relative}
     hScroll = innerWidth > 900;
     track.style.transform = '';
     if (hScroll) {
-      trackDist = Math.max(0, track.scrollWidth - innerWidth);
+      // measure to the last card's right edge plus the gutter (scrollWidth drops the end padding and
+      // innerWidth counts the scrollbar, which left Israel cut off)
+      const last = track.lastElementChild, gutter = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+      trackDist = last ? Math.max(0, last.offsetLeft + last.offsetWidth + gutter - sticky.clientWidth) : 0;
       pin.style.height = (sticky.offsetHeight + trackDist) + 'px';
     } else {
       pin.style.height = '';
