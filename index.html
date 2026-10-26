@@ -289,8 +289,19 @@ section{position:relative}
 .quote-a{grid-column:span 2}
 .quote-b{grid-column:span 2;background:var(--orange);color:var(--navy)}
 .quote-b figcaption b{color:var(--navy)}
-.quote-c{grid-column:span 6;flex-direction:row;align-items:center;flex-wrap:wrap}
+.quote-c{grid-column:span 3}
+.quote-d{grid-column:span 3;background:var(--navy);color:var(--white)}
+.quote-d figcaption b{color:var(--orange)}
 .quote-c blockquote{font-weight:700;font-size:clamp(20px,2vw,26px);max-width:36ch}
+.trips-title{margin-top:clamp(56px,7vw,88px);font-weight:900;font-size:clamp(24px,2.4vw,32px);line-height:1.1;letter-spacing:-.02em;color:var(--navy);max-width:24ch}
+.trip-photos{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:clamp(220px,22vw,320px) clamp(200px,19vw,280px);gap:16px;margin-top:28px}
+.trip-photos .mask-img{border-radius:28px}
+.tp-1{grid-column:span 8}
+.tp-2{grid-column:span 4;grid-row:span 2}
+.tp-2 img{object-position:50% 30%}
+.tp-3{grid-column:span 5}
+.tp-4{grid-column:span 3}
+.tp-4 img{object-position:50% 40%}
 .quotes-note{margin-top:22px;font-size:15px}
 .quotes-note a{font-weight:700;color:var(--navy);min-height:44px;display:inline-flex;align-items:center}
 
@@ -382,7 +393,11 @@ section{position:relative}
   .stack-card .big{font-size:64px}
   .stats{grid-template-columns:1fr;gap:28px;margin-top:56px}
   .quotes{grid-template-columns:1fr}
-  .quote-main,.quote-a,.quote-b,.quote-c{grid-column:auto}
+  .quote-main,.quote-a,.quote-b,.quote-c,.quote-d{grid-column:auto}
+  .trip-photos{grid-template-columns:1fr 1fr;grid-template-rows:auto;grid-auto-flow:dense;gap:10px}
+  .trip-photos .mask-img{border-radius:20px}
+  .tp-1,.tp-3{grid-column:span 2;aspect-ratio:16/9}
+  .tp-2,.tp-4{grid-column:auto;grid-row:auto;aspect-ratio:3/4}
   .quote blockquote{font-size:17px}
   .bento{grid-template-columns:1fr}
   .card-feature,.card-group,.card-insurance{grid-column:auto}
@@ -595,6 +610,17 @@ section{position:relative}
         <blockquote>"Quem ainda não participou, se junte a nós e venha viver essa experiência."</blockquote>
         <figcaption><b>Cristiane</b>Viagem das Bodas 2026</figcaption>
       </figure>
+      <figure class="quote quote-d reveal" style="--d:100ms">
+        <blockquote>"Quero agradecer pelo apoio e empenho na nossa viagem pra SP. Foi uma bênção de Deus, e o senhor fez parte disso. Muito obrigado mesmo!"</blockquote>
+        <figcaption><b>Cliente da Logos</b>Viagem para São Paulo</figcaption>
+      </figure>
+    </div>
+    <h3 class="trips-title">Algumas das turmas que já viajaram com a gente</h3>
+    <div class="trip-photos">
+      <div class="mask-img tp-1"><img src="img/turma-selfie-1400.webp" srcset="img/turma-selfie-900.webp 900w, img/turma-selfie-1400.webp 1400w" sizes="(max-width:760px) 100vw, 66vw" alt="Edson tirando uma selfie com uma turma grande de clientes sorrindo no jardim do hotel" loading="lazy" decoding="async" width="1400" height="647"></div>
+      <div class="mask-img tp-2" style="--d:120ms"><img src="img/bodas-casal-800.webp" srcset="img/bodas-casal-500.webp 500w, img/bodas-casal-800.webp 800w" sizes="(max-width:760px) 50vw, 33vw" alt="Casal comemorando 33 anos de casados na Viagem das Bodas, com a placa do Casamento Fortalecido" loading="lazy" decoding="async" width="800" height="1422"></div>
+      <div class="mask-img tp-3" style="--d:60ms"><img src="img/turma-onibus-1200.webp" srcset="img/turma-onibus-800.webp 800w, img/turma-onibus-1200.webp 1200w" sizes="(max-width:760px) 100vw, 42vw" alt="Turma de mais de 40 clientes reunida na frente do ônibus da excursão" loading="lazy" decoding="async" width="1200" height="560"></div>
+      <div class="mask-img tp-4" style="--d:180ms"><img src="img/casal-serra-720.webp" srcset="img/casal-serra-500.webp 500w, img/casal-serra-720.webp 720w" sizes="(max-width:760px) 50vw, 25vw" alt="Casal de clientes passeando num gramado com uma serra ao fundo" loading="lazy" decoding="async" width="720" height="1280"></div>
     </div>
     <p class="quotes-note">Veja mais fotos e vídeos das viagens no <a href="https://www.instagram.com/logostviagens/" target="_blank" rel="noopener">Instagram @logostviagens</a></p>
   </div>
@@ -604,7 +630,7 @@ section{position:relative}
 <section class="section bg-white" id="sobre">
   <div class="wrap about-grid">
     <div class="about-media">
-      <div class="mask-img"><img src="https://images.unsplash.com/photo-1508963493744-76fce69379c0?auto=format&fit=crop&w=900&q=65" srcset="https://images.unsplash.com/photo-1508963493744-76fce69379c0?auto=format&fit=crop&w=600&q=65 600w, https://images.unsplash.com/photo-1508963493744-76fce69379c0?auto=format&fit=crop&w=900&q=65 900w" sizes="(max-width:960px) 100vw, 45vw" alt="Casal sentado num banco olhando o mar" loading="lazy" decoding="async"></div>
+      <div class="mask-img"><img src="img/edson-maclania.webp" alt="Edson e Maclania, da Logos Tour, na frente do hotel numa viagem em grupo para Gravatá" loading="lazy" decoding="async" width="503" height="629"></div>
       <div class="about-badge">6 edições da Viagem das Bodas</div>
     </div>
     <div>
@@ -689,7 +715,7 @@ section{position:relative}
       </div>
     </div>
     <div class="footer-bottom">
-      <span>Logos Tour Viagens e Turismo. Todos os direitos reservados, 2026.</span>
+      <span>Logos Tour Viagens e Turismo. CNPJ e Cadastur 11.256.256/0001-80. Todos os direitos reservados, 2026.</span>
       <span>Natal/RN</span>
     </div>
   </div>
@@ -705,6 +731,34 @@ section{position:relative}
   const WA_NUMBER = '5584996341123';
   const WA_DEFAULT = 'Olá, Edson! Vim pelo site e quero um orçamento de viagem.';
   const waLink = msg => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg || WA_DEFAULT)}`;
+
+  /* ---------- medição: Google Analytics + Pixel da Meta ---------- */
+  // preencha os dois IDs para ligar a medição; enquanto estiverem vazios, nada é carregado
+  const GA_ID = '';      // ex.: G-XXXXXXXXXX
+  const PIXEL_ID = '';   // ex.: 123456789012345
+  if (GA_ID) {
+    const s = document.createElement('script'); s.async = true;
+    s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`; document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { dataLayer.push(arguments); };
+    gtag('js', new Date()); gtag('config', GA_ID);
+  }
+  if (PIXEL_ID) {
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', PIXEL_ID); fbq('track', 'PageView');
+  }
+  // every WhatsApp click counts as a lead, tagged with where it came from and the destination
+  function trackLead(origem, destino) {
+    if (window.gtag) gtag('event', 'generate_lead', { origem, destino: destino || '' });
+    if (window.fbq) fbq('track', 'Contact', { content_name: destino || origem });
+  }
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href*="wa.me"]');
+    if (!a) return;
+    const card = a.closest('.dest-card');
+    trackLead(a.closest('[id]')?.id || 'site', card ? card.querySelector('h3')?.textContent : '');
+  }, true);
+
   const U = (id, w) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=65`;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -1119,6 +1173,7 @@ section{position:relative}
     if (selected && selected.world) dest = selected.country >= 0 ? (city ? `${city}, ${selected.name}` : selected.name) : (city || 'um destino que ainda vou definir');
     const msg = [`Olá, Edson! Vim pelo site e quero um orçamento para ${dest}.`,
       `Quando: ${f.when.value}`, `Pessoas: ${people}`, `Orçamento por pessoa: ${f.budget.value}`].join('\n');
+    trackLead('globo', dest);
     window.open(waLink(msg), '_blank', 'noopener');
   });
 
