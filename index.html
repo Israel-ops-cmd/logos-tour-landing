@@ -37,6 +37,54 @@
   "sameAs": ["https://www.instagram.com/logostviagens/"]
 }
 </script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Como posso pagar?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "À vista no Pix, com 3% de desconto, ou em até 10x sem juros no cartão de crédito ou no boleto Santander."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "O que está incluído no pacote?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Depende do destino, e eu te mando tudo por escrito antes de você fechar. Nos pacotes completos entram passagem, hospedagem, traslado ou carro e os passeios do roteiro. Se algo não estiver incluído, eu já aviso no orçamento."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Quais documentos eu preciso?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Para viajar dentro do Brasil, basta RG ou CNH original e com foto. Para Israel e outros países, é preciso passaporte válido por pelo menos 6 meses, e eu te ajudo com o que mais o país pedir. Crianças e adolescentes viajando sem os dois pais precisam de autorização, e eu te explico como fazer."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Eu viajo sozinho ou tem alguém da Logos junto?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nas viagens em grupo, eu e a Maclania vamos junto com a turma, do embarque até a volta. Nos pacotes individuais, você fala comigo pelo WhatsApp antes, durante e depois da viagem."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "A Logos é uma agência registrada?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sim. A Logos Tour é cadastrada no Cadastur, do Ministério do Turismo, com o número 11.256.256/0001-80. A gente tem escritório em Candelária, Natal, e você pode vir tomar um café com a gente."
+   }
+  }
+ ]
+}
+</script>
 <style>
 :root{
   --navy:#16307A;
@@ -263,6 +311,7 @@ section{position:relative}
 .stack-card .big{font-weight:900;font-size:clamp(72px,12vw,180px);line-height:.8;letter-spacing:-.05em}
 .stack-card h3{font-weight:900;font-size:clamp(28px,3.6vw,52px);line-height:1;letter-spacing:-.03em;margin-bottom:16px}
 .stack-card p{font-size:clamp(17px,1.4vw,20px);max-width:46ch}
+.cert-link{display:inline-flex;align-items:center;min-height:44px;margin-top:10px;font-weight:700;font-size:16px;color:inherit;text-decoration:underline;text-underline-offset:4px}
 .stack-card:nth-child(1){background:var(--navy);color:var(--white)}
 .stack-card:nth-child(1) .big{color:var(--orange)}
 .stack-card:nth-child(2){background:var(--orange);color:var(--navy)}
@@ -302,6 +351,19 @@ section{position:relative}
 .offer-price span{display:block;margin-top:8px;font-size:16px;max-width:38ch}
 .offer .btn{align-self:flex-start}
 .offers-note{margin-top:20px;font-size:14px}
+.faq-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(32px,6vw,96px);align-items:start}
+.faq-head{position:sticky;top:calc(var(--nav-h) + 32px)}
+.faq-head p{margin:20px 0 28px;font-size:18px;max-width:40ch}
+.faq-list{border-top:1px solid color-mix(in srgb,var(--navy) 18%,transparent)}
+.faq-item{border-bottom:1px solid color-mix(in srgb,var(--navy) 18%,transparent)}
+.faq-item summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;min-height:44px;padding:24px 0;font-weight:900;font-size:clamp(19px,1.8vw,24px);line-height:1.2;letter-spacing:-.015em;color:var(--navy);cursor:pointer}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary:focus-visible{outline:3px solid var(--orange);outline-offset:4px;border-radius:8px}
+.faq-icon{position:relative;flex:none;width:36px;height:36px;border-radius:50%;background:var(--navy);transition:background .3s ease,transform .4s var(--ease-out)}
+.faq-icon::before,.faq-icon::after{content:'';position:absolute;left:50%;top:50%;width:14px;height:2px;margin:-1px 0 0 -7px;background:var(--white);border-radius:2px}
+.faq-icon::after{transform:rotate(90deg)}
+.faq-item[open] .faq-icon{background:var(--red);transform:rotate(45deg)}
+.faq-item p{padding:0 56px 26px 0;font-size:17px;max-width:62ch}
 .quotes{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px;margin-top:56px}
 .quote{margin:0;border-radius:28px;padding:clamp(24px,3vw,40px);display:flex;flex-direction:column;justify-content:space-between;gap:24px;background:var(--white)}
 .quote blockquote{margin:0;font-size:18px;line-height:1.5}
@@ -419,6 +481,9 @@ section{position:relative}
   .quotes{grid-template-columns:1fr}
   .quote-main,.quote-a,.quote-b,.quote-c,.quote-d{grid-column:auto}
   .offers{grid-template-columns:1fr}
+  .faq-grid{grid-template-columns:1fr}
+  .faq-head{position:static}
+  .faq-item p{padding-right:0}
   .offer .btn{align-self:stretch}
   .trip-photos{grid-template-columns:1fr 1fr;grid-template-rows:auto;grid-auto-flow:dense;gap:10px}
   .trip-photos .mask-img{border-radius:20px}
@@ -602,7 +667,7 @@ section{position:relative}
           <li>Carro alugado em Porto Alegre para rodar a serra no seu ritmo</li>
         </ul>
         <div class="offer-cut" aria-hidden="true"></div>
-        <div class="offer-price"><small>Por pessoa</small><strong>R$ 2.916,80</strong><span>ou 10x de R$ 291,68 sem juros</span></div>
+        <div class="offer-price"><small>Por pessoa</small><strong>R$ 2.916,80</strong><span>ou 10x de R$ 291,68 sem juros. No Pix, 3% de desconto: R$ 2.829,30.</span></div>
         <a class="btn btn-primary btn-magnetic" data-wa data-msg="Olá, Edson! Vim pelo site e quero reservar o pacote de Gramado de 10 a 16 de junho de 2027." href="#"><svg aria-hidden="true"><use href="#wa"/></svg>Quero ir para Gramado</a>
       </article>
       <article class="offer reveal" style="--d:120ms">
@@ -614,7 +679,7 @@ section{position:relative}
           <li>Carro alugado com quilometragem livre</li>
         </ul>
         <div class="offer-cut" aria-hidden="true"></div>
-        <div class="offer-price"><small>Por pessoa, em suíte para 2</small><strong>R$ 2.242,33</strong><span>à vista no Pix, ou 10x de R$ 224,23 sem juros no cartão ou no boleto Santander</span></div>
+        <div class="offer-price"><small>Por pessoa, em suíte para 2</small><strong>R$ 2.242,33</strong><span>ou 10x de R$ 224,23 sem juros no cartão ou no boleto Santander. No Pix, 3% de desconto: R$ 2.175,06.</span></div>
         <a class="btn btn-primary btn-magnetic" data-wa data-msg="Olá, Edson! Vim pelo site e quero reservar o pacote de Campos do Jordão de 15 a 19 de abril de 2027." href="#"><svg aria-hidden="true"><use href="#wa"/></svg>Quero ir para Campos do Jordão</a>
       </article>
     </div>
@@ -633,7 +698,7 @@ section{position:relative}
       </article>
       <article class="stack-card" style="--i:1">
         <span class="big">RN</span>
-        <div><h3>Registrada no Cadastur</h3><p>A Logos Tour é cadastrada no Ministério do Turismo e tem endereço em Natal. Você compra de quem existe de verdade.</p></div>
+        <div><h3>Registrada no Cadastur</h3><p>A Logos Tour é cadastrada no Ministério do Turismo, com o número 11.256.256/0001-80, e tem endereço em Natal. Você compra de quem existe de verdade.</p><a class="cert-link" href="docs/certificado-cadastur.pdf" target="_blank" rel="noopener">Ver o certificado do Cadastur</a></div>
       </article>
       <article class="stack-card" style="--i:2">
         <span class="big">1:1</span>
@@ -701,6 +766,39 @@ section{position:relative}
       <p class="fill-text" id="fill-text">Meu nome é Edson. Há 6 anos eu organizo viagens saindo de Natal, e boa parte dos meus clientes chegou por indicação de outro cliente.</p>
       <p class="about-text reveal">A Logos Tour nasceu de uma ideia simples: viajar fica muito melhor quando alguém de confiança cuida dos detalhes. Junto com a minha esposa, criei a Viagem das Bodas em parceria com o Projeto Casamento Fortalecido, que já está na sexta edição. Hoje levo casais, famílias e grupos para o Nordeste, a Serra Gaúcha, o Rio e a Terra Santa.</p>
       <a class="btn btn-primary btn-magnetic" data-wa href="#"><svg aria-hidden="true"><use href="#wa"/></svg>Conversar com o Edson</a>
+    </div>
+  </div>
+</section>
+
+<!-- Perguntas frequentes -->
+<section class="section bg-sand" id="duvidas" aria-labelledby="duvidas-title">
+  <div class="wrap faq-grid">
+    <div class="faq-head">
+      <h2 class="h2 split" id="duvidas-title">Antes de chamar, você pode estar se perguntando</h2>
+      <p class="reveal">Ficou alguma dúvida que não está aqui? Me chama que eu respondo na hora.</p>
+      <a class="btn btn-primary btn-magnetic" data-wa data-msg="Olá, Edson! Vim pelo site e tenho uma dúvida." href="#"><svg aria-hidden="true"><use href="#wa"/></svg>Tirar uma dúvida</a>
+    </div>
+    <div class="faq-list reveal">
+        <details class="faq-item">
+          <summary>Como posso pagar?<span class="faq-icon" aria-hidden="true"></span></summary>
+          <p>À vista no Pix, com 3% de desconto, ou em até 10x sem juros no cartão de crédito ou no boleto Santander.</p>
+        </details>
+        <details class="faq-item">
+          <summary>O que está incluído no pacote?<span class="faq-icon" aria-hidden="true"></span></summary>
+          <p>Depende do destino, e eu te mando tudo por escrito antes de você fechar. Nos pacotes completos entram passagem, hospedagem, traslado ou carro e os passeios do roteiro. Se algo não estiver incluído, eu já aviso no orçamento.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Quais documentos eu preciso?<span class="faq-icon" aria-hidden="true"></span></summary>
+          <p>Para viajar dentro do Brasil, basta RG ou CNH original e com foto. Para Israel e outros países, é preciso passaporte válido por pelo menos 6 meses, e eu te ajudo com o que mais o país pedir. Crianças e adolescentes viajando sem os dois pais precisam de autorização, e eu te explico como fazer.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Eu viajo sozinho ou tem alguém da Logos junto?<span class="faq-icon" aria-hidden="true"></span></summary>
+          <p>Nas viagens em grupo, eu e a Maclania vamos junto com a turma, do embarque até a volta. Nos pacotes individuais, você fala comigo pelo WhatsApp antes, durante e depois da viagem.</p>
+        </details>
+        <details class="faq-item">
+          <summary>A Logos é uma agência registrada?<span class="faq-icon" aria-hidden="true"></span></summary>
+          <p>Sim. A Logos Tour é cadastrada no Cadastur, do Ministério do Turismo, com o número 11.256.256/0001-80. A gente tem escritório em Candelária, Natal, e você pode vir tomar um café com a gente.</p>
+        </details>
     </div>
   </div>
 </section>
@@ -778,7 +876,7 @@ section{position:relative}
       </div>
     </div>
     <div class="footer-bottom">
-      <span>Logos Tour Viagens e Turismo. CNPJ e Cadastur 11.256.256/0001-80. Todos os direitos reservados, 2026.</span>
+      <span>Logos Tour Viagens e Turismo (M A de A Silva Turismo e Serviços). CNPJ e Cadastur 11.256.256/0001-80. Todos os direitos reservados, 2026.</span>
       <span>Natal/RN</span>
     </div>
   </div>
