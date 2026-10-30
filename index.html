@@ -243,7 +243,8 @@ section{position:relative}
 .bg-tint{background:var(--orange-tint)}
 
 /* word reveal */
-.split .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.22em;margin-bottom:-.22em}
+/* the tight letter-spacing pushes glyphs past each word's box, so pad the clip and pull it back */
+.split .w{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .1em .22em;margin:0 -.1em -.22em}
 .split .w>span{display:inline-block;transform:translateY(120%);transition:transform 1s var(--ease-expo);transition-delay:calc(var(--i)*55ms)}
 .split.is-in .w>span{transform:translateY(0)}
 
@@ -321,7 +322,7 @@ section{position:relative}
 .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:72px}
 .stat{border-top:2px solid var(--navy);padding-top:20px}
 .stat .odo{display:flex;align-items:flex-start;font-weight:900;font-size:clamp(56px,8vw,112px);line-height:1.15;letter-spacing:-.04em;color:var(--navy);height:1.15em;overflow:hidden}
-.stat .odo .col{display:inline-block;height:1.15em;overflow:hidden}
+.stat .odo .col{display:inline-block;height:1.15em;overflow:hidden;padding:0 .06em;margin:0 -.06em}
 .stat .odo .strip{display:flex;flex-direction:column;transition:transform 2s var(--ease-expo);transition-delay:calc(var(--k)*120ms)}
 .stat .odo .strip span{height:1.15em;line-height:1.15}
 .stat p{margin-top:12px;font-weight:700;font-size:17px}
