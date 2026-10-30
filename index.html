@@ -137,7 +137,7 @@ button{font:inherit}
 .site-nav .logo{min-height:44px}
 .site-nav .logo .logo-word b{color:currentColor}
 .nav-pill{display:flex;align-items:center;height:48px;padding:4px;border:1px solid color-mix(in srgb,currentColor 35%,transparent);background:color-mix(in srgb,var(--white) 10%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:999px}
-.nav-pill a{display:flex;align-items:center;height:38px;padding:0 18px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px;transition:background .3s ease,color .3s ease}
+.nav-pill a{display:flex;align-items:center;height:38px;padding:0 18px;white-space:nowrap;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px;transition:background .3s ease,color .3s ease}
 .nav-pill a:hover,.nav-pill a.active{background:var(--white);color:var(--navy)}
 .site-nav.is-solid .nav-pill a:hover,.site-nav.is-solid .nav-pill a.active{background:var(--navy);color:var(--white)}
 .nav-actions{display:flex;align-items:center;gap:10px}
@@ -465,6 +465,23 @@ section{position:relative}
 .footer li a:hover{color:var(--orange)}
 .footer-bottom{margin-top:48px;padding-top:24px;border-top:1px solid color-mix(in srgb,var(--white) 18%,transparent);font-size:14px;color:color-mix(in srgb,var(--white) 70%,transparent);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 
+/* tablet */
+@media (max-width:1240px){
+  .nav-opt{display:none!important}
+  .nav-cta{white-space:nowrap}
+}
+@media (max-width:960px){
+  .quotes{grid-template-columns:1fr 1fr}
+  .quote-main{grid-column:span 2;grid-row:auto}
+  .quote-a,.quote-b{grid-column:span 1}
+  .quote-c,.quote-d{grid-column:span 2}
+  .agenda{grid-template-columns:1fr 1fr;row-gap:32px}
+  .bodas-grid{grid-template-columns:1fr}
+  .bodas-media{position:static}
+  .faq-grid{grid-template-columns:1fr}
+  .faq-head{position:static}
+}
+
 /* whatsapp float */
 .wa-float{position:fixed;z-index:45;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));width:60px;height:60px;border-radius:50%;background:var(--red);color:var(--white);display:flex;align-items:center;justify-content:center;box-shadow:0 14px 34px -10px color-mix(in srgb,var(--red) 80%,transparent);transition:transform .5s var(--ease-out),opacity .4s ease}
 .wa-float svg{width:30px;height:30px}
@@ -565,8 +582,8 @@ section{position:relative}
     <a href="#bodas">Bodas</a>
     <a href="#pacotes">Agenda</a>
     <a href="#destinos">Destinos</a>
-    <a href="#diferenciais">Por que a Logos</a>
-    <a href="#depoimentos">Depoimentos</a>
+    <a class="nav-opt" href="#diferenciais">Por que a Logos</a>
+    <a class="nav-opt" href="#depoimentos">Depoimentos</a>
     <a href="#sobre">Sobre</a>
     <a href="#contato">Contato</a>
   </nav>
@@ -944,6 +961,8 @@ section{position:relative}
       <div>
         <h3>Navegue</h3>
         <ul>
+          <li><a href="#bodas">Viagem das Bodas</a></li>
+          <li><a href="#pacotes">Agenda 2027</a></li>
           <li><a href="#destinos">Destinos</a></li>
           <li><a href="#diferenciais">Por que a Logos</a></li>
           <li><a href="#depoimentos">Depoimentos</a></li>
